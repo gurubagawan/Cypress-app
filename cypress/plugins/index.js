@@ -15,8 +15,13 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+require('dotenv').config();
+
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-  require('dotenv').config();
+  // modify env value
+  config.baseUrl = process.env.SITE_URL;
+  config.env = process.env;
+
+  // return config
+  return config;
 };

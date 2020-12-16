@@ -30,6 +30,15 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 
+Cypress.Commands.add('visitSite', () => {
+  cy.visit('', {
+    auth: {
+      username: Cypress.env('SITE_USER'),
+      password: Cypress.env('SITE_PASS'),
+    },
+  });
+});
+
 Cypress.Commands.add(
   'shouldHaveContent',
   { prevSubject: true },

@@ -1,15 +1,9 @@
 import * as helper from '../support/index';
 
 context('Home Page', () => {
-  beforeEach(() => {
-    cy.server();
-    cy.route('POST', '/wp-admin/admin-ajax.php').as('initialLoad');
-    cy.visit('', {
-      auth: {
-        username: 'kcfinalpreprod',
-        password: 'Wal123Content',
-      },
-    });
+  before(() => {
+    cy.intercept('POST', '/wp-admin/admin-ajax.php').as('initialLoad');
+    cy.visitSite();
     cy.wait('@initialLoad');
   });
 
@@ -71,7 +65,7 @@ context('Home Page', () => {
     it('checks that 6 seasonal posts are visible', () => {
       cy.get('.seasonal_row').first().children().should('have.length', 6);
     });
-    describe.only('checks that the 6 seasonal posts are working properly', () => {
+    describe('checks that the 6 seasonal posts are working properly', () => {
       for (let i = 1; i < 7; i++) {
         helper.checkStoryBlock(
           `.home_v2 > :nth-child(4) >.seasonal_row > :nth-child(${i}) `,
@@ -91,6 +85,48 @@ context('Home Page', () => {
       cy.getAndFind('.seasonal_posts', '.moreLink')
         .first()
         .clickLink('/category');
+    });
+  });
+
+  describe.only('Editors Picks Section', () => {
+    it('checks that editors section exists', () => {
+      cy.get('.editor_picks').shouldHaveContent();
+    });
+    it('checks that editors picks subtitle is there', () => {
+      cy.get('.editor_picks').contains(
+        'Cut the guesswork with our honest product reviews'
+      );
+    });
+    it('checks that editors picks row exists', () => {
+      cy.get('.editors_picks_row').shouldHaveContent();
+    });
+    describe.only('Editors profile block', () => {
+      it('checks that editors profile block is present', () => {
+        cy.get('.editors_block').shouldHaveContent();
+      });
+      it.skip('checks that editors profile block has a profile image that links to author profile', () => {
+        cy.checkImage('.editors_block');
+        cy.getAndFind('.editors_block', '.aut_im').checkLink();
+        cy.getAndFind('.editors_block', '.aut_im').clickLink();
+      });
+      it('checks that author details block is present', () => {
+        cy.getAndFind('.editors_block', '.aut_det').shouldHaveContent();
+      });
+      it('checks that editors profile has a has a linked article', () => {
+        cy.checkTitleLink('.editors_block > .aut_det');
+      });
+      it('checks that editors profile is linked in block', () => {
+        cy.checkAuthorLink('.editors_block > .aut_det');
+        cy.visit('');
+      });
+      it.only('checks See All Picks link', () => {
+        cy.getAndFind('.editors_block', '.aut_det')
+          .find('.read_more')
+          .checkLink();
+        cy.getAndFind('.editors_block', '.aut_det')
+          .find('.read_more')
+          .clickLink();
+      });
     });
   });
 });

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/gurubagawan/Cypress-app#readme",
   "dependencies": {
     "cypress": "^6.1.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "mocha": "^8.2.1"
   }
 }
