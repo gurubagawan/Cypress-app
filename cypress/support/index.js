@@ -39,3 +39,5 @@ export const checkStoryBlock = (selector, name, index = 0) => {
     cy.checkImageLink(selector);
   });
 };
+
+export const checkItemCard = (selector, name, index = 0) => {};

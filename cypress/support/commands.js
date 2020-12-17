@@ -60,6 +60,8 @@ Cypress.Commands.add(
         if (splicer) {
           finalURL = finalURL.replace(splicer, '');
         }
+        cy.intercept(finalURL).as('pageLoad');
+        cy.wait('@pageLoad');
         cy.url().should('contain', finalURL);
       });
   }

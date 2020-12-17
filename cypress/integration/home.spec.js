@@ -100,7 +100,7 @@ context('Home Page', () => {
     it('checks that editors picks row exists', () => {
       cy.get('.editors_picks_row').shouldHaveContent();
     });
-    describe.only('Editors profile block', () => {
+    describe('Editors profile block', () => {
       it('checks that editors profile block is present', () => {
         cy.get('.editors_block').shouldHaveContent();
       });
@@ -119,13 +119,87 @@ context('Home Page', () => {
         cy.checkAuthorLink('.editors_block > .aut_det');
         cy.visit('');
       });
-      it.only('checks See All Picks link', () => {
+      it('checks See All Picks link', () => {
         cy.getAndFind('.editors_block', '.aut_det')
           .find('.read_more')
           .checkLink();
         cy.getAndFind('.editors_block', '.aut_det')
           .find('.read_more')
           .clickLink();
+      });
+      // still need to figure this out
+      it.skip('checks when the slider', () => {
+        cy.get();
+      });
+    });
+    describe.only('Tests for the editor carousel', () => {
+      let visibleLength = 0;
+      it('checks that the slider has been initalized', () => {
+        cy.getAndFind(
+          '.editors_picks_row > .block',
+          '[aria-hidden=false]'
+        ).then(($div) => {
+          visibleLength = $div.length;
+        });
+        cy.get('#homev2_featuredcar').shouldHaveContent();
+      });
+      it('checks that slider changes with forward button at a rate of 1 item per click', () => {
+        cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+          .eq(1)
+          .find('.c_title')
+          .then(($div) => {
+            const initialTitle = $div.text();
+            cy.get('#homev2_featuredcar > .slick-next').click();
+            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+              .eq(1)
+              .find('.c_title')
+              .should('not.contain', initialTitle);
+            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+              .first()
+              .find('.c_title')
+              .should('contain', initialTitle);
+          });
+        for (let i = 0; i < visibleLength; i++) {
+          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+            .eq(i)
+            .find('.c_title')
+            .shouldHaveContent()
+            .checkLink();
+        }
+      });
+      it('checks that slider changes with back button at a rate of 1 item per click', () => {
+        cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+          .eq(1)
+          .find('.c_title')
+          .then(($div) => {
+            const initialTitle = $div.text();
+            cy.get('#homev2_featuredcar > .slick-prev').click();
+            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+              .eq(1)
+              .find('.c_title')
+              .should('not.contain', initialTitle);
+            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+              .eq(2)
+              .find('.c_title')
+              .should('contain', initialTitle);
+          });
+        for (let i = 0; i < visibleLength; i++) {
+          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+            .eq(i)
+            .find('.c_title')
+            .shouldHaveContent()
+            .checkLink();
+          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+            .eq(i)
+            .find('.price')
+            .shouldHaveContent()
+            .checkLink();
+          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
+            .eq(i)
+            .find('.wal_prod_link')
+            .shouldHaveContent()
+            .checkLink();
+        }
       });
     });
   });
