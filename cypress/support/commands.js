@@ -60,8 +60,8 @@ Cypress.Commands.add(
         if (splicer) {
           finalURL = finalURL.replace(splicer, '');
         }
-        cy.intercept(finalURL).as('pageLoad');
-        cy.wait('@pageLoad');
+        // cy.intercept(finalURL).as('pageLoad');
+        // cy.wait('@pageLoad');
         cy.url().should('contain', finalURL);
       });
   }
@@ -82,6 +82,7 @@ Cypress.Commands.add('checkTitleLink', (selector) => {
     .and('not.be.empty');
   cy.getAndFind(selector, '.title_art').checkLink();
   cy.getAndFind(selector, '.title_art').clickLink();
+  cy.visitSite();
 });
 
 //Find the Author class within an element, check that its visible, not empty, and that the link works
@@ -89,6 +90,7 @@ Cypress.Commands.add('checkAuthorLink', (selector) => {
   cy.getAndFind(selector, '.author_art').shouldHaveContent();
   cy.getAndFind(selector, '.author_art').checkLink();
   cy.getAndFind(selector, '.author_art').clickLink();
+  cy.visitSite();
 });
 
 //Find the Readtime calss within an element check that it's visible and contains the word read
@@ -96,14 +98,15 @@ Cypress.Commands.add('checkReadTag', (selector) => {
   cy.getAndFind(selector, '.readtime').contains('read').and('be.visible');
 });
 
-Cypress.Commands.add('checkImage', (selector) => {
+Cypress.Commands.add('checkImage', { prevSubject: true }, (selector) => {
   cy.getAndFind(selector, 'img').should('be.visible');
 });
 
 Cypress.Commands.add('checkImageLink', (selector) => {
-  cy.checkImage(selector);
+  cy.get(selector).checkImage();
   cy.getAndFind(selector, '.img_wrapper').checkLink();
   cy.getAndFind(selector, '.img_wrapper').clickLink();
+  cy.visitSite();
 });
 
 Cypress.Commands.add('checkItemPrice', { prevSubject: true }, (selector) => {

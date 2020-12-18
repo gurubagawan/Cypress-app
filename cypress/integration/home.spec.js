@@ -40,7 +40,7 @@ context('Home Page', () => {
           .children()
           .should('have.length', 2);
       });
-      describe('checks that the two child elements have the required properties', () => {
+      describe.only('checks that the two child elements have the required properties', () => {
         for (let i = 1; i < 3; i++) {
           helper.checkStoryBlock(
             `.rightBlock > .block_bottom >  :nth-child(${i})`,
@@ -104,8 +104,8 @@ context('Home Page', () => {
       it('checks that editors profile block is present', () => {
         cy.get('.editors_block').shouldHaveContent();
       });
-      it.skip('checks that editors profile block has a profile image that links to author profile', () => {
-        cy.checkImage('.editors_block');
+      it('checks that editors profile block has a profile image that links to author profile', () => {
+        cy.get('.editors_block').checkImage();
         cy.getAndFind('.editors_block', '.aut_im').checkLink();
         cy.getAndFind('.editors_block', '.aut_im').clickLink();
       });
@@ -132,7 +132,8 @@ context('Home Page', () => {
         cy.get();
       });
     });
-    describe.only('Tests for the editor carousel', () => {
+
+    describe('Tests for the editor carousel', () => {
       let visibleLength = 0;
       it('checks that the slider has been initalized', () => {
         cy.getAndFind(
@@ -164,6 +165,25 @@ context('Home Page', () => {
         );
         helper.checkItemCarousel('.editors_picks_row > .block', visibleLength);
       });
+    });
+
+    describe.only('Tests for second row of editors', () => {
+      for (let i = 1; i < 4; i++) {
+        it(`checks that card ${i} exists`, () => {
+          cy.getAndFind('.edPicks_bl', `.bl-${i}`).shouldHaveContent();
+        });
+        it.only(`checks that card ${i} has a background image`, () => {
+          cy.get(`.edPicks_bl > .bl-${i}`).checkImage();
+        });
+        it(`checks that card ${i} has a working title link`, () => {
+          cy.checkTitleLink(`.edPicks_bl > .bl-${i}`);
+          // cy.visitSite();
+        });
+        it(`checks that card ${i} has a working author link`, () => {
+          cy.checkAuthorLink(`.edPicks_bl > .bl-${i}`);
+          // cy.visitSite();
+        });
+      }
     });
   });
 });
