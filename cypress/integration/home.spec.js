@@ -143,63 +143,26 @@ context('Home Page', () => {
         });
         cy.get('#homev2_featuredcar').shouldHaveContent();
       });
+      it('checks that the slider has working product cards', () => {
+        helper.checkItemCarousel('.editors_picks_row > .block', visibleLength);
+      });
       it('checks that slider changes with forward button at a rate of 1 item per click', () => {
-        cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-          .eq(1)
-          .find('.c_title')
-          .then(($div) => {
-            const initialTitle = $div.text();
-            cy.get('#homev2_featuredcar > .slick-next').click();
-            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-              .eq(1)
-              .find('.c_title')
-              .should('not.contain', initialTitle);
-            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-              .first()
-              .find('.c_title')
-              .should('contain', initialTitle);
-          });
-        for (let i = 0; i < visibleLength; i++) {
-          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-            .eq(i)
-            .find('.c_title')
-            .shouldHaveContent()
-            .checkLink();
-        }
+        cy.checkSliderNext(
+          '.editors_picks_row > .block',
+          '.c_title',
+          '#homev2_featuredcar',
+          1
+        );
+        helper.checkItemCarousel('.editors_picks_row > .block', visibleLength);
       });
       it('checks that slider changes with back button at a rate of 1 item per click', () => {
-        cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-          .eq(1)
-          .find('.c_title')
-          .then(($div) => {
-            const initialTitle = $div.text();
-            cy.get('#homev2_featuredcar > .slick-prev').click();
-            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-              .eq(1)
-              .find('.c_title')
-              .should('not.contain', initialTitle);
-            cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-              .eq(2)
-              .find('.c_title')
-              .should('contain', initialTitle);
-          });
-        for (let i = 0; i < visibleLength; i++) {
-          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-            .eq(i)
-            .find('.c_title')
-            .shouldHaveContent()
-            .checkLink();
-          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-            .eq(i)
-            .find('.price')
-            .shouldHaveContent()
-            .checkLink();
-          cy.getAndFind('.editors_picks_row > .block', '[aria-hidden=false]')
-            .eq(i)
-            .find('.wal_prod_link')
-            .shouldHaveContent()
-            .checkLink();
-        }
+        cy.checkSliderPrev(
+          '.editors_picks_row > .block',
+          '.c_title',
+          '#homev2_featuredcar',
+          1
+        );
+        helper.checkItemCarousel('.editors_picks_row > .block', visibleLength);
       });
     });
   });

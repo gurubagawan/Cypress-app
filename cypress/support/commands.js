@@ -105,3 +105,59 @@ Cypress.Commands.add('checkImageLink', (selector) => {
   cy.getAndFind(selector, '.img_wrapper').checkLink();
   cy.getAndFind(selector, '.img_wrapper').clickLink();
 });
+
+Cypress.Commands.add('checkItemPrice', { prevSubject: true }, (selector) => {
+  cy.get(selector).find('.price').shouldHaveContent().checkLink();
+});
+
+Cypress.Commands.add('checkItemTitle', { prevSubject: true }, (selector) => {
+  cy.get(selector).find('.c_title').shouldHaveContent().checkLink();
+});
+
+Cypress.Commands.add('checkWalLink', { prevSubject: true }, (selector) => {
+  cy.get(selector).find('.wal_prod_link').shouldHaveContent().checkLink();
+});
+
+Cypress.Commands.add(
+  'checkSliderNext',
+  (selector, titleClass, sliderSelect, skipAmount) => {
+    cy.getAndFind(selector, '[aria-hidden=false]')
+      .eq(skipAmount)
+      .find(titleClass)
+      .then(($div) => {
+        const initialTitle = $div.text();
+        cy.get(`${sliderSelect} > .slick-next`).click();
+        cy.getAndFind(selector, '[aria-hidden=false]')
+          .eq(skipAmount)
+          .find(titleClass)
+          .should('not.contain', initialTitle)
+          .shouldHaveContent();
+        cy.getAndFind(selector, '[aria-hidden=false]')
+          .first()
+          .find(titleClass)
+          .should('contain', initialTitle);
+      });
+  }
+);
+
+Cypress.Commands.add(
+  'checkSliderPrev',
+  (selector, titleClass, sliderSelect, skipAmount) => {
+    cy.getAndFind(selector, '[aria-hidden=false]')
+      .first()
+      .find(titleClass)
+      .then(($div) => {
+        const initialTitle = $div.text();
+        cy.get(`${sliderSelect} > .slick-prev`).click();
+        cy.getAndFind(selector, '[aria-hidden=false]')
+          .first()
+          .find(titleClass)
+          .should('not.contain', initialTitle)
+          .shouldHaveContent();
+        cy.getAndFind(selector, '[aria-hidden=false]')
+          .eq(skipAmount)
+          .find(titleClass)
+          .should('contain', initialTitle);
+      });
+  }
+);

@@ -40,4 +40,10 @@ export const checkStoryBlock = (selector, name, index = 0) => {
   });
 };
 
-export const checkItemCard = (selector, name, index = 0) => {};
+export const checkItemCarousel = (selector, rounds) => {
+  for (let i = 0; i < rounds; i++) {
+    cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemTitle();
+    cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemPrice();
+    cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkWalLink();
+  }
+};
