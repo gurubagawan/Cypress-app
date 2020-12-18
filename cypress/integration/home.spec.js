@@ -40,7 +40,7 @@ context('Home Page', () => {
           .children()
           .should('have.length', 2);
       });
-      describe.only('checks that the two child elements have the required properties', () => {
+      describe('checks that the two child elements have the required properties', () => {
         for (let i = 1; i < 3; i++) {
           helper.checkStoryBlock(
             `.rightBlock > .block_bottom >  :nth-child(${i})`,
@@ -168,11 +168,14 @@ context('Home Page', () => {
     });
 
     describe.only('Tests for second row of editors', () => {
+      it('checks that row exists ', () => {
+        cy.get('.edPicks_bl').shouldHaveContent();
+      });
       for (let i = 1; i < 4; i++) {
         it(`checks that card ${i} exists`, () => {
           cy.getAndFind('.edPicks_bl', `.bl-${i}`).shouldHaveContent();
         });
-        it.only(`checks that card ${i} has a background image`, () => {
+        it(`checks that card ${i} has a background image`, () => {
           cy.get(`.edPicks_bl > .bl-${i}`).checkImage();
         });
         it(`checks that card ${i} has a working title link`, () => {
