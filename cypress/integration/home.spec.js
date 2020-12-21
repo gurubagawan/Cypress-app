@@ -27,7 +27,7 @@ context('Home Page', () => {
     });
   });
 
-  describe('Hero side bar tests', () => {
+  describe.only('Hero side bar tests', () => {
     describe('Hero sidebar first item', () => {
       helper.checkStoryBlock('.rightBlock > .bl_top', 'hero side bar top item');
     });
@@ -48,6 +48,25 @@ context('Home Page', () => {
           );
         }
       });
+    });
+  });
+
+  describe.only('Tests for the latest stories carousel', () => {
+    let sliderLength = 0;
+    it('checks that block is there', () => {
+      cy.getAndFind(
+        '.recent_carousal_posts > #posts_slider',
+        '[aria-hidden=false]'
+      ).then(($div) => {
+        sliderLength = $div.length;
+      });
+      cy.get('.recent_carousal_posts > #posts_slider').shouldHaveContent();
+    });
+    it(`checks the story carousel`, () => {
+      helper.checkPostCarousel(
+        '.recent_carousal_posts > #posts_slider',
+        sliderLength
+      );
     });
   });
 
@@ -88,7 +107,7 @@ context('Home Page', () => {
     });
   });
 
-  describe.only('Editors Picks Section', () => {
+  describe('Editors Picks Section', () => {
     it('checks that editors section exists', () => {
       cy.get('.editor_picks').shouldHaveContent();
     });
@@ -167,11 +186,11 @@ context('Home Page', () => {
       });
     });
 
-    describe.only('Tests for second row of editors', () => {
+    describe('Tests for second row of editors', () => {
       it('checks that row exists ', () => {
         cy.get('.edPicks_bl').shouldHaveContent();
       });
-      for (let i = 1; i < 4; i++) {
+      for (let i = 1; i < 5; i++) {
         it(`checks that card ${i} exists`, () => {
           cy.getAndFind('.edPicks_bl', `.bl-${i}`).shouldHaveContent();
         });

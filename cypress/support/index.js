@@ -26,7 +26,7 @@ export const checkStoryBlock = (selector, name, index = 0) => {
       .and('exist')
       .and('not.be.empty');
   });
-  it(`checks that ${name} has working title link`, () => {
+  it.only(`checks that ${name} has working title link`, () => {
     cy.checkTitleLink(selector);
   });
   it(`checks that ${name} has a working author link`, () => {
@@ -45,5 +45,20 @@ export const checkItemCarousel = (selector, rounds) => {
     cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemTitle();
     cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemPrice();
     cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkWalLink();
+  }
+};
+
+export const getCarouselLength = (selector) => {
+  cy.getAndFind(selector, '[aria-hidden=false]').then(($div) => {
+    console.log($div.length);
+    return $div.length;
+  });
+};
+
+export const checkPostCarousel = (selector, rounds) => {
+  for (let i = 0; i < rounds; i++) {
+    cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkTitleLink();
+    // cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemPrice();
+    // cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkWalLink();
   }
 };

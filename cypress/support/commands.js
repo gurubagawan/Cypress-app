@@ -76,14 +76,18 @@ Cypress.Commands.add('getAndFind', (primarySelector, secondarySelector) => {
 });
 
 //Find the title class within an element, check that its visible, not empty, and that the link works
-Cypress.Commands.add('checkTitleLink', (selector) => {
-  cy.getAndFind(selector, '.title_art')
-    .should('be.visible')
-    .and('not.be.empty');
-  cy.getAndFind(selector, '.title_art').checkLink();
-  cy.getAndFind(selector, '.title_art').clickLink();
-  cy.visitSite();
-});
+Cypress.Commands.add(
+  'checkTitleLink',
+  { prevSubject: 'optional' },
+  (selector) => {
+    cy.getAndFind(selector, '.title_art')
+      .should('be.visible')
+      .and('not.be.empty');
+    cy.getAndFind(selector, '.title_art').checkLink();
+    cy.getAndFind(selector, '.title_art').clickLink();
+    cy.visitSite();
+  }
+);
 
 //Find the Author class within an element, check that its visible, not empty, and that the link works
 Cypress.Commands.add('checkAuthorLink', (selector) => {
@@ -121,6 +125,7 @@ Cypress.Commands.add('checkWalLink', { prevSubject: true }, (selector) => {
   cy.get(selector).find('.wal_prod_link').shouldHaveContent().checkLink();
 });
 
+//Checks that the slider link goes back or forward by a given amount
 Cypress.Commands.add(
   'checkSliderNext',
   (selector, titleClass, sliderSelect, skipAmount) => {
