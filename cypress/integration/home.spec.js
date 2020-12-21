@@ -27,7 +27,7 @@ context('Home Page', () => {
     });
   });
 
-  describe.only('Hero side bar tests', () => {
+  describe('Hero side bar tests', () => {
     describe('Hero sidebar first item', () => {
       helper.checkStoryBlock('.rightBlock > .bl_top', 'hero side bar top item');
     });
@@ -61,6 +61,16 @@ context('Home Page', () => {
         sliderLength = $div.length;
       });
       cy.get('.recent_carousal_posts > #posts_slider').shouldHaveContent();
+    });
+    it('checks that latest stories section header has content', () => {
+      cy.getAndFind('.recent_carousal_posts', '.section_title')
+        .first()
+        .shouldHaveContent();
+    });
+    it('checks that latest stories section sub header has content', () => {
+      cy.getAndFind('.recent_carousal_posts', '.section_dek')
+        .first()
+        .shouldHaveContent();
     });
     it(`checks the story carousel`, () => {
       helper.checkPostCarousel(

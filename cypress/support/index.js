@@ -26,7 +26,7 @@ export const checkStoryBlock = (selector, name, index = 0) => {
       .and('exist')
       .and('not.be.empty');
   });
-  it.only(`checks that ${name} has working title link`, () => {
+  it(`checks that ${name} has working title link`, () => {
     cy.checkTitleLink(selector);
   });
   it(`checks that ${name} has a working author link`, () => {
