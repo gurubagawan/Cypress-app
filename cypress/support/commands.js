@@ -79,12 +79,20 @@ Cypress.Commands.add('getAndFind', (primarySelector, secondarySelector) => {
 Cypress.Commands.add(
   'checkTitleLink',
   { prevSubject: 'optional' },
-  (selector) => {
-    cy.getAndFind(selector, '.title_art')
-      .should('be.visible')
-      .and('not.be.empty');
-    cy.getAndFind(selector, '.title_art').checkLink();
-    cy.getAndFind(selector, '.title_art').clickLink();
+  (subject, selector) => {
+    if (subject) {
+      cy.getAndFind(subject, '.title_art')
+        .should('be.visible')
+        .and('not.be.empty');
+      cy.getAndFind(subject, '.title_art').checkLink();
+      cy.getAndFind(subject, '.title_art').clickLink();
+    } else {
+      cy.getAndFind(selector, '.title_art')
+        .should('be.visible')
+        .and('not.be.empty');
+      cy.getAndFind(selector, '.title_art').checkLink();
+      cy.getAndFind(selector, '.title_art').clickLink();
+    }
     cy.visitSite();
   }
 );

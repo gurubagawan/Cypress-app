@@ -18,7 +18,7 @@ context('Home Page', () => {
     });
   });
 
-  describe('Featured item tests', () => {
+  describe.only('Featured item tests', () => {
     helper.checkStoryBlock('.primary_bl', 'Featured Hero Item');
     it('checks that date tag is visible and has content', () => {
       cy.getAndFind('.primary_bl', '.date')
@@ -51,7 +51,7 @@ context('Home Page', () => {
     });
   });
 
-  describe.only('Tests for the latest stories carousel', () => {
+  describe('Tests for the latest stories carousel', () => {
     let sliderLength = 0;
     it('checks that block is there', () => {
       cy.getAndFind(
