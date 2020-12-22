@@ -18,7 +18,7 @@ context('Home Page', () => {
     });
   });
 
-  describe.only('Featured item tests', () => {
+  describe('Featured item tests', () => {
     helper.checkStoryBlock('.primary_bl', 'Featured Hero Item');
     it('checks that date tag is visible and has content', () => {
       cy.getAndFind('.primary_bl', '.date')
@@ -72,29 +72,36 @@ context('Home Page', () => {
         .first()
         .shouldHaveContent();
     });
-    it(`checks the story carousel`, () => {
+    it(`checks the story carousel has working stories`, () => {
       helper.checkPostCarousel(
         '.recent_carousal_posts > #posts_slider',
         sliderLength
       );
     });
+    it('checks that the story carousel moves back 1 space when hitting back', () => {
+      cy.checkSliderPrev(
+        '.recent_carousal_posts > #posts_slider',
+        '.title_art',
+        ' #posts_slider',
+        1
+      );
+    });
+    it('checks that the story carousel moves forward 1 space when hitting next', () => {
+      cy.checkSliderNext(
+        '.recent_carousal_posts > #posts_slider',
+        '.title_art',
+        ' #posts_slider',
+        1
+      );
+    });
   });
 
   describe('Seasonal section tests', () => {
-    it('checks that seasonal section header has content', () => {
-      cy.getAndFind('.seasonal_posts', '.section_title')
-        .first()
-        .shouldHaveContent();
-    });
-    it('checks that seasonal section sub header has content', () => {
-      cy.getAndFind('.seasonal_posts', '.section_dek')
-        .first()
-        .shouldHaveContent();
-    });
+    helper.checkSectionHeader('seasonal', '.seasonal_posts');
     it('checks that 6 seasonal posts are visible', () => {
       cy.get('.seasonal_row').first().children().should('have.length', 6);
     });
-    describe('checks that the 6 seasonal posts are working properly', () => {
+    describe.only('checks that the 6 seasonal posts are working properly', () => {
       for (let i = 1; i < 7; i++) {
         helper.checkStoryBlock(
           `.home_v2 > :nth-child(4) >.seasonal_row > :nth-child(${i}) `,
@@ -216,6 +223,9 @@ context('Home Page', () => {
           // cy.visitSite();
         });
       }
+    });
+    describe.only('tests for recipes section ', () => {
+      helper.checkSectionHeader('Recipe', '.recipes_bl');
     });
   });
 });

@@ -58,7 +58,38 @@ export const getCarouselLength = (selector) => {
 export const checkPostCarousel = (selector, rounds) => {
   for (let i = 0; i < rounds; i++) {
     cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkTitleLink();
-    // cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemPrice();
-    // cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkWalLink();
   }
+};
+
+export const checkSectionHeader = (
+  sectionTitle,
+  selector,
+  titleContent,
+  subContent
+) => {
+  it(`checks that ${sectionTitle} section title has content`, () => {
+    cy.checkSectionTitle(selector, titleContent);
+  });
+  it(`checks that ${sectionTitle} section sub header has content`, () => {
+    cy.checkSectionSub(selector, subContent);
+  });
+};
+
+export const checkRecipeBlock = (selector, name, index = 0) => {
+  it(`checks that ${name} exists and has content`, () => {
+    cy.get(selector)
+      .eq(index)
+      .should('be.visible')
+      .and('exist')
+      .and('not.be.empty');
+  });
+  it(`checks that ${name} has working title link`, () => {
+    cy.checkTitleLink(selector);
+  });
+  it(`checks that ${name} has a read tag`, () => {
+    cy.checkReadTag(selector);
+  });
+  it(`checks that ${name} has a working image`, () => {
+    cy.checkImageLink(selector);
+  });
 };

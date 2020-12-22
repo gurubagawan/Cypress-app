@@ -64,6 +64,7 @@ Cypress.Commands.add(
         // cy.wait('@pageLoad');
         cy.url().should('contain', finalURL);
       });
+    cy.visitSite();
   }
 );
 
@@ -93,7 +94,6 @@ Cypress.Commands.add(
       cy.getAndFind(selector, '.title_art').checkLink();
       cy.getAndFind(selector, '.title_art').clickLink();
     }
-    cy.visitSite();
   }
 );
 
@@ -102,7 +102,6 @@ Cypress.Commands.add('checkAuthorLink', (selector) => {
   cy.getAndFind(selector, '.author_art').shouldHaveContent();
   cy.getAndFind(selector, '.author_art').checkLink();
   cy.getAndFind(selector, '.author_art').clickLink();
-  cy.visitSite();
 });
 
 //Find the Readtime calss within an element check that it's visible and contains the word read
@@ -118,7 +117,6 @@ Cypress.Commands.add('checkImageLink', (selector) => {
   cy.get(selector).checkImage();
   cy.getAndFind(selector, '.img_wrapper').checkLink();
   cy.getAndFind(selector, '.img_wrapper').clickLink();
-  cy.visitSite();
 });
 
 Cypress.Commands.add('checkItemPrice', { prevSubject: true }, (selector) => {
@@ -136,19 +134,19 @@ Cypress.Commands.add('checkWalLink', { prevSubject: true }, (selector) => {
 //Checks that the slider link goes back or forward by a given amount
 Cypress.Commands.add(
   'checkSliderNext',
-  (selector, titleClass, sliderSelect, skipAmount) => {
-    cy.getAndFind(selector, '[aria-hidden=false]')
+  (carouselSelector, titleClass, sliderSelect, skipAmount) => {
+    cy.getAndFind(carouselSelector, '[aria-hidden=false]')
       .eq(skipAmount)
       .find(titleClass)
       .then(($div) => {
         const initialTitle = $div.text();
         cy.get(`${sliderSelect} > .slick-next`).click();
-        cy.getAndFind(selector, '[aria-hidden=false]')
+        cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .eq(skipAmount)
           .find(titleClass)
           .should('not.contain', initialTitle)
           .shouldHaveContent();
-        cy.getAndFind(selector, '[aria-hidden=false]')
+        cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .first()
           .find(titleClass)
           .should('contain', initialTitle);
@@ -158,22 +156,36 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'checkSliderPrev',
-  (selector, titleClass, sliderSelect, skipAmount) => {
-    cy.getAndFind(selector, '[aria-hidden=false]')
+  (carouselSelector, titleClass, sliderSelect, skipAmount) => {
+    cy.getAndFind(carouselSelector, '[aria-hidden=false]')
       .first()
       .find(titleClass)
       .then(($div) => {
         const initialTitle = $div.text();
         cy.get(`${sliderSelect} > .slick-prev`).click();
-        cy.getAndFind(selector, '[aria-hidden=false]')
+        cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .first()
           .find(titleClass)
           .should('not.contain', initialTitle)
           .shouldHaveContent();
-        cy.getAndFind(selector, '[aria-hidden=false]')
+        cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .eq(skipAmount)
           .find(titleClass)
           .should('contain', initialTitle);
       });
   }
 );
+
+Cypress.Commands.add('checkSectionTitle', (selector, content) => {
+  cy.getAndFind(selector, '.section_title').shouldHaveContent();
+  if (content) {
+    cy.getAndFind(selector, '.section_title').contains(content);
+  }
+});
+
+Cypress.Commands.add('checkSectionSub', (selector, content) => {
+  cy.getAndFind(selector, '.section_dek').shouldHaveContent();
+  if (content) {
+    cy.getAndFind(selector, '.section_dek').contains(content);
+  }
+});
