@@ -238,7 +238,7 @@ context('Home Page', () => {
         cy.getAndFind('.bottom', '.moreLink').clickLink();
       });
     });
-    describe.only('tests for kid meals section ', () => {
+    describe('tests for kid meals section ', () => {
       helper.checkSectionHeader('Kid Meals', '.bottom');
       for (let i = 1; i < 4; i++) {
         helper.checkRecipeBlock(
@@ -250,6 +250,26 @@ context('Home Page', () => {
         cy.getAndFind('.bottom', '.moreLink').shouldHaveContent();
         cy.getAndFind('.bottom', '.moreLink').checkLink();
         cy.getAndFind('.bottom', '.moreLink').clickLink();
+      });
+    });
+
+    describe.only('tests for discover more block', () => {
+      let catAmount = 3;
+      it('checks that Discover More title is present', () => {
+        cy.get('.cat_details').then(($div) => {
+          catAmount = $div.length;
+          console.log($div[0]);
+        });
+        cy.get('.section_head').shouldHaveContent();
+      });
+
+      it(`category links`, () => {
+        cy.get('.cat_details').then(($div) => {
+          // catAmount = $div.length;
+          for (let i = 0; i < $div.length; i++) {
+            cy.get('.cat_details').eq(i).shouldHaveContent().checkLink();
+          }
+        });
       });
     });
   });
