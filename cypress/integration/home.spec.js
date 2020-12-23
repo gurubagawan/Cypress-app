@@ -101,7 +101,7 @@ context('Home Page', () => {
     it('checks that 6 seasonal posts are visible', () => {
       cy.get('.seasonal_row').first().children().should('have.length', 6);
     });
-    describe.only('checks that the 6 seasonal posts are working properly', () => {
+    describe('checks that the 6 seasonal posts are working properly', () => {
       for (let i = 1; i < 7; i++) {
         helper.checkStoryBlock(
           `.home_v2 > :nth-child(4) >.seasonal_row > :nth-child(${i}) `,
@@ -224,8 +224,33 @@ context('Home Page', () => {
         });
       }
     });
-    describe.only('tests for recipes section ', () => {
-      helper.checkSectionHeader('Recipe', '.recipes_bl');
+    describe('tests for recipes section ', () => {
+      helper.checkSectionHeader('Recipe', '.bottom');
+      for (let i = 1; i < 4; i++) {
+        helper.checkRecipeBlock(
+          `.bottom > .row > :nth-child(${i})`,
+          `Recipe story ${i}`
+        );
+      }
+      it('checks the more recipes link', () => {
+        cy.getAndFind('.bottoml', '.moreLink').shouldHaveContent();
+        cy.getAndFind('.bottom', '.moreLink').checkLink();
+        cy.getAndFind('.bottom', '.moreLink').clickLink();
+      });
+    });
+    describe.only('tests for kid meals section ', () => {
+      helper.checkSectionHeader('Kid Meals', '.bottom');
+      for (let i = 1; i < 4; i++) {
+        helper.checkRecipeBlock(
+          `.bottom> .row > :nth-child(${i})`,
+          `Kid meals story ${i}`
+        );
+      }
+      it('checks the more kid recipes link', () => {
+        cy.getAndFind('.bottom', '.moreLink').shouldHaveContent();
+        cy.getAndFind('.bottom', '.moreLink').checkLink();
+        cy.getAndFind('.bottom', '.moreLink').clickLink();
+      });
     });
   });
 });

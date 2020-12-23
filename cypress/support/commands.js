@@ -105,8 +105,12 @@ Cypress.Commands.add('checkAuthorLink', (selector) => {
 });
 
 //Find the Readtime calss within an element check that it's visible and contains the word read
-Cypress.Commands.add('checkReadTag', (selector) => {
-  cy.getAndFind(selector, '.readtime').contains('read').and('be.visible');
+Cypress.Commands.add('checkReadTag', (selector, type = 'read') => {
+  if (type == 'recipe') {
+    cy.getAndFind(selector, '.readtime').contains('recipe').and('be.visible');
+  } else {
+    cy.getAndFind(selector, '.readtime').contains('read').and('be.visible');
+  }
 });
 
 Cypress.Commands.add('checkImage', { prevSubject: true }, (selector) => {

@@ -18,22 +18,18 @@ import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-export const checkStoryBlock = (selector, name, index = 0) => {
+export const checkStoryBlock = (selector, name) => {
   it(`checks that ${name} exists and has content`, () => {
-    cy.get(selector)
-      .eq(index)
-      .should('be.visible')
-      .and('exist')
-      .and('not.be.empty');
+    cy.get(selector).should('be.visible').and('exist').and('not.be.empty');
+  });
+  it(`checks that ${name} has a read tag`, () => {
+    cy.checkReadTag(selector);
   });
   it(`checks that ${name} has working title link`, () => {
     cy.checkTitleLink(selector);
   });
   it(`checks that ${name} has a working author link`, () => {
     cy.checkAuthorLink(selector);
-  });
-  it(`checks that ${name} has a read tag`, () => {
-    cy.checkReadTag(selector);
   });
   it(`checks that ${name} has a working image`, () => {
     cy.checkImageLink(selector);
@@ -75,19 +71,15 @@ export const checkSectionHeader = (
   });
 };
 
-export const checkRecipeBlock = (selector, name, index = 0) => {
+export const checkRecipeBlock = (selector, name, type = 'read') => {
   it(`checks that ${name} exists and has content`, () => {
-    cy.get(selector)
-      .eq(index)
-      .should('be.visible')
-      .and('exist')
-      .and('not.be.empty');
+    cy.get(selector).should('be.visible').and('exist').and('not.be.empty');
+  });
+  it(`checks that ${name} has a read tag`, () => {
+    cy.checkReadTag(selector, type);
   });
   it(`checks that ${name} has working title link`, () => {
     cy.checkTitleLink(selector);
-  });
-  it(`checks that ${name} has a read tag`, () => {
-    cy.checkReadTag(selector);
   });
   it(`checks that ${name} has a working image`, () => {
     cy.checkImageLink(selector);
