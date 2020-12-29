@@ -18,12 +18,12 @@ import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-export const checkStoryBlock = (selector, name) => {
+export const checkStoryBlock = (selector, name, language = 'en') => {
   it(`checks that ${name} exists and has content`, () => {
     cy.get(selector).should('be.visible').and('exist').and('not.be.empty');
   });
   it(`checks that ${name} has a read tag`, () => {
-    cy.checkReadTag(selector);
+    cy.checkReadTag(selector, language);
   });
   it(`checks that ${name} has working title link`, () => {
     cy.checkTitleLink(selector);

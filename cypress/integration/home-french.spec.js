@@ -1,9 +1,9 @@
 import * as helper from '../support/index';
 
-context('Home Page', () => {
+context('Home Page French', () => {
   before(() => {
     cy.intercept('POST', '/wp-admin/admin-ajax.php').as('initialLoad');
-    cy.visitSite();
+    cy.visitFrenchSite();
     cy.wait('@initialLoad');
   });
 
@@ -15,8 +15,8 @@ context('Home Page', () => {
       cy.get('.td-header-logo').should('not.be.empty');
     });
     it('checks the nav is visible', () => {
-      cy.get('.menu-en-menu-v1-5-container').should('be.visible');
-      cy.get('#menu-en-menu-v1-6')
+      cy.get('.menu-fr-menu-v1-5-container').should('be.visible');
+      cy.get('#menu-fr-menu-v1-6')
         .children()
         .then(($div) => {
           navChildren = $div.length;
@@ -24,12 +24,12 @@ context('Home Page', () => {
     });
     it('checks that each nav item is a link', () => {
       for (let i = 0; i < 6; i++) {
-        cy.get('#menu-en-menu-v1-6').children().eq(i).checkLink();
+        cy.get('#menu-fr-menu-v1-6').children().eq(i).checkLink();
       }
     });
   });
 
-  describe.only('Footer tests', () => {
+  describe('Footer tests', () => {
     it('checks that the footer exists', () => {
       cy.get('.td-sub-footer-container').shouldHaveContent();
     });
@@ -38,7 +38,7 @@ context('Home Page', () => {
     });
     it('checks the footer links', () => {
       for (let i = 0; i < 4; i++) {
-        cy.get('#menu-sub-footer').children().eq(i).checkLink();
+        cy.get('#menu-sub-footer-french').children().eq(i).checkLink();
       }
     });
     it('checks that footer social links exist', () => {
@@ -56,14 +56,14 @@ context('Home Page', () => {
     it('checks instagram link', () => {
       cy.get('[data-event-tar=Instagram]').shouldHaveContent();
     });
-    it('checks that the french link works', () => {
+    it.skip('checks that the english link works', () => {
       cy.get('#menu-item-887-fr').click();
-      cy.get('body').should('have.class', 'fr');
+      cy.get('body').should('not.have.class', 'fr');
     });
   });
 
   describe('Featured item tests', () => {
-    helper.checkStoryBlock('.primary_bl', 'Featured Hero Item');
+    helper.checkStoryBlock('.primary_bl', 'Featured Hero Item', 'fr');
     it('checks that date tag is visible and has content', () => {
       cy.getAndFind('.primary_bl', '.date')
         .should('be.visible')
@@ -73,7 +73,11 @@ context('Home Page', () => {
 
   describe('Hero side bar tests', () => {
     describe('Hero sidebar first item', () => {
-      helper.checkStoryBlock('.rightBlock > .bl_top', 'hero side bar top item');
+      helper.checkStoryBlock(
+        '.rightBlock > .bl_top',
+        'hero side bar top item',
+        'fr'
+      );
     });
     describe('Hero sidebar bottom items', () => {
       it('checks that bottom bar exists', () => {
@@ -88,7 +92,8 @@ context('Home Page', () => {
         for (let i = 1; i < 3; i++) {
           helper.checkStoryBlock(
             `.rightBlock > .block_bottom >  :nth-child(${i})`,
-            `side bar item ${i + 1}`
+            `side bar item ${i + 1}`,
+            'fr'
           );
         }
       });
@@ -149,7 +154,8 @@ context('Home Page', () => {
       for (let i = 1; i < 7; i++) {
         helper.checkStoryBlock(
           `.home_v2 > :nth-child(4) >.seasonal_row > :nth-child(${i}) `,
-          `Seasonal row 1 post ${i}`
+          `Seasonal row 1 post ${i}`,
+          'fr'
         );
       }
       it('checks that there are 6 children', () => {
@@ -172,6 +178,7 @@ context('Home Page', () => {
     it('checks that editors section exists', () => {
       cy.get('.editor_picks').shouldHaveContent();
     });
+    // This one
     it('checks that editors picks subtitle is there', () => {
       cy.get('.editor_picks').contains(
         'Cut the guesswork with our honest product reviews'
@@ -197,7 +204,7 @@ context('Home Page', () => {
       });
       it('checks that editors profile is linked in block', () => {
         cy.checkAuthorLink('.editors_block > .aut_det');
-        cy.visit('');
+        cy.visitFrenchSite();
       });
       it('checks See All Picks link', () => {
         cy.getAndFind('.editors_block', '.aut_det')
@@ -276,6 +283,8 @@ context('Home Page', () => {
           `Recipe story ${i}`
         );
       }
+
+      // This one
       it('checks the more recipes link', () => {
         cy.getAndFind('.bottoml', '.moreLink').shouldHaveContent();
         cy.getAndFind('.bottom', '.moreLink').checkLink();

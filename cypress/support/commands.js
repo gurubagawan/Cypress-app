@@ -39,6 +39,15 @@ Cypress.Commands.add('visitSite', () => {
   });
 });
 
+Cypress.Commands.add('visitFrenchSite', () => {
+  cy.visit('/fr', {
+    auth: {
+      username: Cypress.env('SITE_USER'),
+      password: Cypress.env('SITE_PASS'),
+    },
+  });
+});
+
 Cypress.Commands.add(
   'shouldHaveContent',
   { prevSubject: true },
@@ -105,11 +114,31 @@ Cypress.Commands.add('checkAuthorLink', (selector) => {
 });
 
 //Find the Readtime calss within an element check that it's visible and contains the word read
-Cypress.Commands.add('checkReadTag', (selector, type = 'read') => {
-  if (type == 'recipe') {
-    cy.getAndFind(selector, '.readtime').contains('recipe').and('be.visible');
+Cypress.Commands.add('checkReadTag', (selector, lang = 'en', type = 'read') => {
+  let content;
+  if (lang == 'fr') {
+    if (type == 'recipe') {
+      content = 'recette';
+    } else {
+      content = 'de lecture';
+    }
   } else {
-    cy.getAndFind(selector, '.readtime').contains('read').and('be.visible');
+    if (type == 'recipe') {
+      content = 'recipe';
+    } else {
+      content = 'read';
+    }
+  }
+  cy.getAndFind(selector, '.readtime').contains(content).and('be.visible');
+});
+
+Cypress.Commands.add('checkReadTagFr', (selector, type = 'read') => {
+  if (type == 'recipe') {
+    cy.getAndFind(selector, '.readtime').contains('recette').and('be.visible');
+  } else {
+    cy.getAndFind(selector, '.readtime')
+      .contains('de lecture')
+      .and('be.visible');
   }
 });
 
