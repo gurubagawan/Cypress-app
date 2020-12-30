@@ -30,6 +30,23 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 
+// overwrite existing contains function to be case insensitive
+Cypress.Commands.overwrite(
+  'contains',
+  (originalFn, subject, filter, text, options = {}) => {
+    // determine if a filter argument was passed
+    if (typeof text === 'object') {
+      options = text;
+      text = filter;
+      filter = undefined;
+    }
+
+    options.matchCase = false;
+
+    return originalFn(subject, filter, text, options);
+  }
+);
+
 Cypress.Commands.add('visitSite', () => {
   cy.visit('', {
     auth: {
@@ -73,7 +90,6 @@ Cypress.Commands.add(
         // cy.wait('@pageLoad');
         cy.url().should('contain', finalURL);
       });
-    cy.visitSite();
   }
 );
 
@@ -132,15 +148,15 @@ Cypress.Commands.add('checkReadTag', (selector, lang = 'en', type = 'read') => {
   cy.getAndFind(selector, '.readtime').contains(content).and('be.visible');
 });
 
-Cypress.Commands.add('checkReadTagFr', (selector, type = 'read') => {
-  if (type == 'recipe') {
-    cy.getAndFind(selector, '.readtime').contains('recette').and('be.visible');
-  } else {
-    cy.getAndFind(selector, '.readtime')
-      .contains('de lecture')
-      .and('be.visible');
-  }
-});
+// Cypress.Commands.add('checkReadTagFr', (selector, type = 'read') => {
+//   if (type == 'recipe') {
+//     cy.getAndFind(selector, '.readtime').contains('recette').and('be.visible');
+//   } else {
+//     cy.getAndFind(selector, '.readtime')
+//       .contains('de lecture')
+//       .and('be.visible');
+//   }
+// });
 
 Cypress.Commands.add('checkImage', { prevSubject: true }, (selector) => {
   cy.getAndFind(selector, 'img').should('be.visible');

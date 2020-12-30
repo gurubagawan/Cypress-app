@@ -18,25 +18,37 @@ import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-export const checkStoryBlock = (selector, name, language = 'en') => {
+
+export const visitCorrectSite = (lang) => {
+  if (lang == 'fr') {
+    cy.visitFrenchSite();
+  } else {
+    cy.visitSite();
+  }
+};
+
+export const checkStoryBlock = (selector, name, lang = 'en') => {
   it(`checks that ${name} exists and has content`, () => {
     cy.get(selector).should('be.visible').and('exist').and('not.be.empty');
   });
   it(`checks that ${name} has a read tag`, () => {
-    cy.checkReadTag(selector, language);
+    cy.checkReadTag(selector, lang);
   });
   it(`checks that ${name} has working title link`, () => {
     cy.checkTitleLink(selector);
+    visitCorrectSite(lang);
   });
   it(`checks that ${name} has a working author link`, () => {
     cy.checkAuthorLink(selector);
+    visitCorrectSite(lang);
   });
   it(`checks that ${name} has a working image`, () => {
     cy.checkImageLink(selector);
+    visitCorrectSite(lang);
   });
 };
 
-export const checkItemCarousel = (selector, rounds) => {
+export const checkItemCarousel = (selector, rounds, lang = 'en') => {
   for (let i = 0; i < rounds; i++) {
     cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemTitle();
     cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkItemPrice();
@@ -51,9 +63,10 @@ export const getCarouselLength = (selector) => {
   });
 };
 
-export const checkPostCarousel = (selector, rounds) => {
+export const checkPostCarousel = (selector, rounds, lang = 'en') => {
   for (let i = 0; i < rounds; i++) {
     cy.getAndFind(selector, '[aria-hidden=false]').eq(i).checkTitleLink();
+    visitCorrectSite(lang);
   }
 };
 
@@ -71,17 +84,24 @@ export const checkSectionHeader = (
   });
 };
 
-export const checkRecipeBlock = (selector, name, type = 'read') => {
+export const checkRecipeBlock = (
+  selector,
+  name,
+  lang = 'en',
+  type = 'read'
+) => {
   it(`checks that ${name} exists and has content`, () => {
     cy.get(selector).should('be.visible').and('exist').and('not.be.empty');
   });
   it(`checks that ${name} has a read tag`, () => {
-    cy.checkReadTag(selector, type);
+    cy.checkReadTag(selector, lang, type);
   });
   it(`checks that ${name} has working title link`, () => {
     cy.checkTitleLink(selector);
+    visitCorrectSite(lang);
   });
   it(`checks that ${name} has a working image`, () => {
     cy.checkImageLink(selector);
+    visitCorrectSite(lang);
   });
 };

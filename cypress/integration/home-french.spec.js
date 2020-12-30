@@ -100,7 +100,7 @@ context('Home Page French', () => {
     });
   });
 
-  describe('Tests for the latest stories carousel', () => {
+  describe.only('Tests for the latest stories carousel', () => {
     let sliderLength = 0;
     it('checks that block is there', () => {
       cy.getAndFind(
@@ -178,10 +178,9 @@ context('Home Page French', () => {
     it('checks that editors section exists', () => {
       cy.get('.editor_picks').shouldHaveContent();
     });
-    // This one
     it('checks that editors picks subtitle is there', () => {
       cy.get('.editor_picks').contains(
-        'Cut the guesswork with our honest product reviews'
+        'Nos évaluations de produits vous facilitent les choses'
       );
     });
     it('checks that editors picks row exists', () => {
@@ -195,12 +194,14 @@ context('Home Page French', () => {
         cy.get('.editors_block').checkImage();
         cy.getAndFind('.editors_block', '.aut_im').checkLink();
         cy.getAndFind('.editors_block', '.aut_im').clickLink();
+        cy.visitFrenchSite();
       });
       it('checks that author details block is present', () => {
         cy.getAndFind('.editors_block', '.aut_det').shouldHaveContent();
       });
       it('checks that editors profile has a has a linked article', () => {
         cy.checkTitleLink('.editors_block > .aut_det');
+        cy.visitFrenchSite();
       });
       it('checks that editors profile is linked in block', () => {
         cy.checkAuthorLink('.editors_block > .aut_det');
@@ -213,6 +214,7 @@ context('Home Page French', () => {
         cy.getAndFind('.editors_block', '.aut_det')
           .find('.read_more')
           .clickLink();
+        cy.visitFrenchSite();
       });
       // still need to figure this out
       it.skip('checks when the slider', () => {
@@ -243,6 +245,8 @@ context('Home Page French', () => {
         );
         helper.checkItemCarousel('.editors_picks_row > .block', visibleLength);
       });
+
+      // Is price always there?
       it('checks that slider changes with back button at a rate of 1 item per click', () => {
         cy.checkSliderPrev(
           '.editors_picks_row > .block',
@@ -267,62 +271,63 @@ context('Home Page French', () => {
         });
         it(`checks that card ${i} has a working title link`, () => {
           cy.checkTitleLink(`.edPicks_bl > .bl-${i}`);
-          // cy.visitSite();
+          cy.visitFrenchSite();
         });
         it(`checks that card ${i} has a working author link`, () => {
           cy.checkAuthorLink(`.edPicks_bl > .bl-${i}`);
-          // cy.visitSite();
+          cy.visitFrenchSite();
         });
       }
     });
-    describe('tests for recipes section ', () => {
-      helper.checkSectionHeader('Recipe', '.bottom');
-      for (let i = 1; i < 4; i++) {
-        helper.checkRecipeBlock(
-          `.bottom > .row > :nth-child(${i})`,
-          `Recipe story ${i}`
-        );
-      }
-
-      // This one
-      it('checks the more recipes link', () => {
-        cy.getAndFind('.bottoml', '.moreLink').shouldHaveContent();
-        cy.getAndFind('.bottom', '.moreLink').checkLink();
-        cy.getAndFind('.bottom', '.moreLink').clickLink();
-      });
+  });
+  describe('tests for recipes section ', () => {
+    helper.checkSectionHeader('Recipe', '.recipes_bl');
+    for (let i = 1; i < 4; i++) {
+      helper.checkRecipeBlock(
+        `.recipes_bl > .row > :nth-child(${i})`,
+        `Recipe story ${i}`,
+        'fr',
+        'recipe'
+      );
+    }
+    // This one
+    it('checks the more recipes link', () => {
+      cy.getAndFind('.recipes_bl', '.moreLink').shouldHaveContent();
+      cy.getAndFind('.recipes_bl', '.moreLink').checkLink();
+      cy.getAndFind('.recipes_bl', '.moreLink').clickLink();
     });
-    describe('tests for kid meals section ', () => {
-      helper.checkSectionHeader('Kid Meals', '.bottom');
-      for (let i = 1; i < 4; i++) {
-        helper.checkRecipeBlock(
-          `.bottom> .row > :nth-child(${i})`,
-          `Kid meals story ${i}`
-        );
-      }
-      it('checks the more kid recipes link', () => {
-        cy.getAndFind('.bottom', '.moreLink').shouldHaveContent();
-        cy.getAndFind('.bottom', '.moreLink').checkLink();
-        cy.getAndFind('.bottom', '.moreLink').clickLink();
+  });
+  describe('tests for kid meals section ', () => {
+    helper.checkSectionHeader('Kid Meals', '.bottom');
+    for (let i = 1; i < 4; i++) {
+      helper.checkRecipeBlock(
+        `.bottom> .row > :nth-child(${i})`,
+        `Kid meals story ${i}`
+      );
+    }
+    it('checks the more kid recipes link', () => {
+      cy.getAndFind('.bottom', '.moreLink').shouldHaveContent();
+      cy.getAndFind('.bottom', '.moreLink').checkLink();
+      cy.getAndFind('.bottom', '.moreLink').clickLink();
+    });
+  });
+
+  describe('tests for discover more block', () => {
+    let catAmount = 3;
+    it('checks that Discover More title is present', () => {
+      cy.get('.cat_details').then(($div) => {
+        catAmount = $div.length;
+        console.log($div[0]);
       });
+      cy.get('.section_head').shouldHaveContent();
     });
 
-    describe('tests for discover more block', () => {
-      let catAmount = 3;
-      it('checks that Discover More title is present', () => {
-        cy.get('.cat_details').then(($div) => {
-          catAmount = $div.length;
-          console.log($div[0]);
-        });
-        cy.get('.section_head').shouldHaveContent();
-      });
-
-      it(`category links`, () => {
-        cy.get('.cat_details').then(($div) => {
-          // catAmount = $div.length;
-          for (let i = 0; i < $div.length; i++) {
-            cy.get('.cat_details').eq(i).shouldHaveContent().checkLink();
-          }
-        });
+    it(`category links`, () => {
+      cy.get('.cat_details').then(($div) => {
+        // catAmount = $div.length;
+        for (let i = 0; i < $div.length; i++) {
+          cy.get('.cat_details').eq(i).shouldHaveContent().checkLink();
+        }
       });
     });
   });

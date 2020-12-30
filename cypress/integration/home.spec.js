@@ -29,7 +29,7 @@ context('Home Page', () => {
     });
   });
 
-  describe.only('Footer tests', () => {
+  describe('Footer tests', () => {
     it('checks that the footer exists', () => {
       cy.get('.td-sub-footer-container').shouldHaveContent();
     });
@@ -269,17 +269,19 @@ context('Home Page', () => {
       }
     });
     describe('tests for recipes section ', () => {
-      helper.checkSectionHeader('Recipe', '.bottom');
+      helper.checkSectionHeader('Recipe', '.recipes_bl');
       for (let i = 1; i < 4; i++) {
         helper.checkRecipeBlock(
-          `.bottom > .row > :nth-child(${i})`,
-          `Recipe story ${i}`
+          `.recipes_bl > .row > :nth-child(${i})`,
+          `Recipe story ${i}`,
+          'en',
+          'recipe'
         );
       }
       it('checks the more recipes link', () => {
-        cy.getAndFind('.bottoml', '.moreLink').shouldHaveContent();
-        cy.getAndFind('.bottom', '.moreLink').checkLink();
-        cy.getAndFind('.bottom', '.moreLink').clickLink();
+        cy.getAndFind('.recipes_bl', '.moreLink').shouldHaveContent();
+        cy.getAndFind('.recipes_bl', '.moreLink').checkLink();
+        cy.getAndFind('.recipes_bl', '.moreLink').clickLink();
       });
     });
     describe('tests for kid meals section ', () => {
