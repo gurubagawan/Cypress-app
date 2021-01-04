@@ -48,7 +48,7 @@ Cypress.Commands.overwrite(
 );
 
 Cypress.Commands.add('visitSite', () => {
-  cy.visit('', {
+  cy.visit('/', {
     auth: {
       username: Cypress.env('SITE_USER'),
       password: Cypress.env('SITE_PASS'),

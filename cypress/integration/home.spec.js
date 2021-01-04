@@ -56,9 +56,10 @@ context('Home Page', () => {
     it('checks instagram link', () => {
       cy.get('[data-event-tar=Instagram]').shouldHaveContent();
     });
-    it('checks that the french link works', () => {
+    it.skip('checks that the french link works', () => {
       cy.get('#menu-item-887-fr').click();
       cy.get('body').should('have.class', 'fr');
+      cy.visitSite('/');
     });
   });
 
@@ -145,6 +146,16 @@ context('Home Page', () => {
     it('checks that 6 seasonal posts are visible', () => {
       cy.get('.seasonal_row').first().children().should('have.length', 6);
     });
+    it('checks that seasonal section more link is present', () => {
+      cy.getAndFind('.seasonal_posts', '.moreLink').first().shouldHaveContent();
+    });
+    it('checks that seasonal section more link is working', () => {
+      cy.getAndFind('.seasonal_posts', '.moreLink').first().checkLink();
+      cy.getAndFind('.seasonal_posts', '.moreLink')
+        .first()
+        .clickLink('/category');
+      cy.visitSite();
+    });
     describe('checks that the 6 seasonal posts are working properly', () => {
       for (let i = 1; i < 7; i++) {
         helper.checkStoryBlock(
@@ -155,16 +166,6 @@ context('Home Page', () => {
       it('checks that there are 6 children', () => {
         cy.get('.seasonal_row').first().children().should('have.length', 6);
       });
-    });
-
-    it('checks that seasonal section more link is present', () => {
-      cy.getAndFind('.seasonal_posts', '.moreLink').first().shouldHaveContent();
-    });
-    it('checks that seasonal section more link is working', () => {
-      cy.getAndFind('.seasonal_posts', '.moreLink').first().checkLink();
-      cy.getAndFind('.seasonal_posts', '.moreLink')
-        .first()
-        .clickLink('/category');
     });
   });
 
@@ -188,12 +189,14 @@ context('Home Page', () => {
         cy.get('.editors_block').checkImage();
         cy.getAndFind('.editors_block', '.aut_im').checkLink();
         cy.getAndFind('.editors_block', '.aut_im').clickLink();
+        cy.visitSite();
       });
       it('checks that author details block is present', () => {
         cy.getAndFind('.editors_block', '.aut_det').shouldHaveContent();
       });
       it('checks that editors profile has a has a linked article', () => {
         cy.checkTitleLink('.editors_block > .aut_det');
+        cy.visitSite();
       });
       it('checks that editors profile is linked in block', () => {
         cy.checkAuthorLink('.editors_block > .aut_det');
@@ -203,13 +206,12 @@ context('Home Page', () => {
         cy.getAndFind('.editors_block', '.aut_det')
           .find('.read_more')
           .checkLink();
+        cy.visitSite();
+
         cy.getAndFind('.editors_block', '.aut_det')
           .find('.read_more')
           .clickLink();
-      });
-      // still need to figure this out
-      it.skip('checks when the slider', () => {
-        cy.get();
+        cy.visitSite();
       });
     });
 
@@ -260,62 +262,84 @@ context('Home Page', () => {
         });
         it(`checks that card ${i} has a working title link`, () => {
           cy.checkTitleLink(`.edPicks_bl > .bl-${i}`);
-          // cy.visitSite();
+          cy.visitSite();
         });
         it(`checks that card ${i} has a working author link`, () => {
           cy.checkAuthorLink(`.edPicks_bl > .bl-${i}`);
-          // cy.visitSite();
+          cy.visitSite();
         });
       }
     });
-    describe('tests for recipes section ', () => {
-      helper.checkSectionHeader('Recipe', '.recipes_bl');
-      for (let i = 1; i < 4; i++) {
-        helper.checkRecipeBlock(
-          `.recipes_bl > .row > :nth-child(${i})`,
-          `Recipe story ${i}`,
-          'en',
-          'recipe'
-        );
-      }
-      it('checks the more recipes link', () => {
-        cy.getAndFind('.recipes_bl', '.moreLink').shouldHaveContent();
-        cy.getAndFind('.recipes_bl', '.moreLink').checkLink();
-        cy.getAndFind('.recipes_bl', '.moreLink').clickLink();
-      });
+  });
+
+  describe.only('Video block tests', () => {
+    it('checks that video block exists', () => {
+      cy.get('.video_block').shouldHaveContent();
+      cy.getAndFind('.video_block', 'iframe').should('be.visible');
+      cy.getAndFind('.video_block', '.meta_art').shouldHaveContent();
     });
-    describe('tests for kid meals section ', () => {
-      helper.checkSectionHeader('Kid Meals', '.bottom');
-      for (let i = 1; i < 4; i++) {
-        helper.checkRecipeBlock(
-          `.bottom> .row > :nth-child(${i})`,
-          `Kid meals story ${i}`
-        );
-      }
-      it('checks the more kid recipes link', () => {
-        cy.getAndFind('.bottom', '.moreLink').shouldHaveContent();
-        cy.getAndFind('.bottom', '.moreLink').checkLink();
-        cy.getAndFind('.bottom', '.moreLink').clickLink();
+    it('checks the video block read tag', () => {
+      cy.getAndFind('.video_block', '.readtime').shouldHaveContent();
+      cy.getAndFind('.video_block', '.readtime').contains('watch');
+    });
+    it('checks the video card sub-title', () => {
+      cy.getAndFind('.video_block', '.dek_art').shouldHaveContent();
+    });
+    it('checks video card title', () => {
+      cy.checkTitleLink('.video_block');
+      cy.visitSite();
+    });
+  });
+
+  describe('tests for recipes section ', () => {
+    helper.checkSectionHeader('Recipe', '.recipes_bl');
+    for (let i = 1; i < 4; i++) {
+      helper.checkRecipeBlock(
+        `.recipes_bl > .row > :nth-child(${i})`,
+        `Recipe story ${i}`,
+        'en',
+        'recipe'
+      );
+    }
+    it('checks the more recipes link', () => {
+      cy.getAndFind('.recipes_bl', '.moreLink').shouldHaveContent();
+      cy.getAndFind('.recipes_bl', '.moreLink').checkLink();
+      cy.getAndFind('.recipes_bl', '.moreLink').clickLink();
+      cy.visitSite();
+    });
+  });
+  describe('tests for kid meals section ', () => {
+    helper.checkSectionHeader('Kid Meals', '.bottom');
+    for (let i = 1; i < 4; i++) {
+      helper.checkRecipeBlock(
+        `.bottom> .row > :nth-child(${i})`,
+        `Kid meals story ${i}`
+      );
+    }
+    it('checks the more kid recipes link', () => {
+      cy.getAndFind('.bottom', '.moreLink').shouldHaveContent();
+      cy.getAndFind('.bottom', '.moreLink').checkLink();
+      cy.getAndFind('.bottom', '.moreLink').clickLink();
+      cy.visitSite();
+    });
+  });
+
+  describe('tests for discover more block', () => {
+    let catAmount = 3;
+    it('checks that Discover More title is present', () => {
+      cy.get('.cat_details').then(($div) => {
+        catAmount = $div.length;
+        console.log($div[0]);
       });
+      cy.get('.section_head').shouldHaveContent();
     });
 
-    describe('tests for discover more block', () => {
-      let catAmount = 3;
-      it('checks that Discover More title is present', () => {
-        cy.get('.cat_details').then(($div) => {
-          catAmount = $div.length;
-          console.log($div[0]);
-        });
-        cy.get('.section_head').shouldHaveContent();
-      });
-
-      it(`category links`, () => {
-        cy.get('.cat_details').then(($div) => {
-          // catAmount = $div.length;
-          for (let i = 0; i < $div.length; i++) {
-            cy.get('.cat_details').eq(i).shouldHaveContent().checkLink();
-          }
-        });
+    it(`category links`, () => {
+      cy.get('.cat_details').then(($div) => {
+        // catAmount = $div.length;
+        for (let i = 0; i < $div.length; i++) {
+          cy.get('.cat_details').eq(i).shouldHaveContent().checkLink();
+        }
       });
     });
   });

@@ -7,6 +7,11 @@ context('Home Page French', () => {
     cy.wait('@initialLoad');
   });
 
+  // Check we're on the french page before each test
+  beforeEach(() => {
+    cy.get('body').should('have.class', 'fr');
+  });
+
   // https://on.cypress.io/interacting-with-elements
 
   describe('Nav bar tests', () => {
@@ -56,9 +61,10 @@ context('Home Page French', () => {
     it('checks instagram link', () => {
       cy.get('[data-event-tar=Instagram]').shouldHaveContent();
     });
-    it.skip('checks that the english link works', () => {
-      cy.get('#menu-item-887-fr').click();
+    it('checks that the english link works', () => {
+      cy.get('#menu-item-1148-en').click();
       cy.get('body').should('not.have.class', 'fr');
+      cy.visitFrenchSite();
     });
   });
 
@@ -100,7 +106,7 @@ context('Home Page French', () => {
     });
   });
 
-  describe.only('Tests for the latest stories carousel', () => {
+  describe('Tests for the latest stories carousel', () => {
     let sliderLength = 0;
     it('checks that block is there', () => {
       cy.getAndFind(
@@ -171,6 +177,7 @@ context('Home Page French', () => {
       cy.getAndFind('.seasonal_posts', '.moreLink')
         .first()
         .clickLink('/category');
+      cy.visitFrenchSite();
     });
   });
 
@@ -280,6 +287,26 @@ context('Home Page French', () => {
       }
     });
   });
+
+  describe.only('Video block tests', () => {
+    it('checks that video block exists', () => {
+      cy.get('.video_block').shouldHaveContent();
+      cy.getAndFind('.video_block', 'iframe').should('be.visible');
+      cy.getAndFind('.video_block', '.meta_art').shouldHaveContent();
+    });
+    it('checks the video block read tag', () => {
+      cy.getAndFind('.video_block', '.readtime').shouldHaveContent();
+      cy.getAndFind('.video_block', '.readtime').contains('VIDÉO DE');
+    });
+    it('checks the video card sub-title', () => {
+      cy.getAndFind('.video_block', '.dek_art').shouldHaveContent();
+    });
+    it('checks video card title', () => {
+      cy.checkTitleLink('.video_block');
+      cy.visitSite();
+    });
+  });
+
   describe('tests for recipes section ', () => {
     helper.checkSectionHeader('Recipe', '.recipes_bl');
     for (let i = 1; i < 4; i++) {
@@ -302,13 +329,15 @@ context('Home Page French', () => {
     for (let i = 1; i < 4; i++) {
       helper.checkRecipeBlock(
         `.bottom> .row > :nth-child(${i})`,
-        `Kid meals story ${i}`
+        `Kid meals story ${i}`,
+        'fr'
       );
     }
     it('checks the more kid recipes link', () => {
       cy.getAndFind('.bottom', '.moreLink').shouldHaveContent();
       cy.getAndFind('.bottom', '.moreLink').checkLink();
       cy.getAndFind('.bottom', '.moreLink').clickLink();
+      cy.visitFrenchSite();
     });
   });
 
