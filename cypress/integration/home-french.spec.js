@@ -288,7 +288,7 @@ context('Home Page French', () => {
     });
   });
 
-  describe.only('Video block tests', () => {
+  describe('Video block tests', () => {
     it('checks that video block exists', () => {
       cy.get('.video_block').shouldHaveContent();
       cy.getAndFind('.video_block', 'iframe').should('be.visible');

@@ -272,7 +272,7 @@ context('Home Page', () => {
     });
   });
 
-  describe.only('Video block tests', () => {
+  describe('Video block tests', () => {
     it('checks that video block exists', () => {
       cy.get('.video_block').shouldHaveContent();
       cy.getAndFind('.video_block', 'iframe').should('be.visible');
@@ -329,9 +329,16 @@ context('Home Page', () => {
     it('checks that Discover More title is present', () => {
       cy.get('.cat_details').then(($div) => {
         catAmount = $div.length;
-        console.log($div[0]);
       });
       cy.get('.section_head').shouldHaveContent();
+    });
+    it('checks the scroll to top', () => {
+      cy.get('.section_head').click();
+      cy.get('.td-scroll-up').click();
+      cy.wait(1000);
+      cy.window().then(($window) => {
+        expect($window.scrollY).to.be.closeTo(0, 100);
+      });
     });
 
     it(`category links`, () => {
