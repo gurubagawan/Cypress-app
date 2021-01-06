@@ -7,9 +7,41 @@ context('Home Page', () => {
     cy.wait('@initialLoad');
   });
 
+  describe.only('Main Element tests', () => {
+    afterEach(function () {
+      if (this.currentTest.state === 'failed') {
+        Cypress.runner.stop();
+      }
+    });
+    it('checks that the nav bar exists ', () => {
+      cy.get('.td-header-wrap').shouldHaveContent();
+    });
+    it('checks that the footer exists', () => {
+      cy.get('.td-sub-footer-container').shouldHaveContent();
+    });
+    it('checks that carousel block is there', () => {
+      cy.get('.recent_carousal_posts > #posts_slider').shouldHaveContent();
+    });
+    it('checks that seasonal section is there', () => {
+      cy.get('.home_v2 > :nth-child(4)').shouldHaveContent();
+    });
+    it('checks that editors picks section exists', () => {
+      cy.get('.editor_picks').shouldHaveContent();
+    });
+    it('checks that the recipes block exists ', () => {
+      cy.get('.recipes_bl').shouldHaveContent();
+    });
+    it('checks that bottom block exists', () => {
+      cy.get('.bottom').shouldHaveContent();
+    });
+    it('checks that category links exist', () => {
+      cy.get('.cat_bl').shouldHaveContent();
+    });
+  });
+
   // https://on.cypress.io/interacting-with-elements
 
-  describe('Nav bar tests', () => {
+  describe.only('Nav bar tests', () => {
     let navChildren;
     it('checks that the logo is there ', () => {
       cy.get('.td-header-logo').should('not.be.empty');
@@ -30,9 +62,6 @@ context('Home Page', () => {
   });
 
   describe('Footer tests', () => {
-    it('checks that the footer exists', () => {
-      cy.get('.td-sub-footer-container').shouldHaveContent();
-    });
     it('checks that trademark is present', () => {
       cy.get('.td-sub-footer-copy').shouldHaveContent();
     });
