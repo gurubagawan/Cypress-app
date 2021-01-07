@@ -9,7 +9,7 @@
     "cypress:version": "cypress version",
     "lint": "eslint examples",
     "lint:json": "eslint --ext .json examples",
-    "start": "echo Call npm start from each example subfolder!",
+    "start": "test",
     "stop-only": "stop-only --folder examples --skip node_modules --skip dist --skip .cache --skip build",
     "test": "cypress run --record --key=abc123",
     "test:ci": "node ./test-examples",
@@ -19,7 +19,7 @@
     "test:ci:firefox": "node ./test-examples --firefox",
     "test:ci:windows": "node ./test-examples --windows",
     "test:ci:windows:record": "node ./test-examples --windows --record",
-    "warn-only": "stop-only --warn --folder examples --skip node_modules"
+    "warn-only": "stop-only --warn --folder examples --skip node_modules", 
   },
   "repository": {
     "type": "git",
