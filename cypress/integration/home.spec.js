@@ -229,7 +229,7 @@ context('Home Page', () => {
       });
       it('checks that editors profile is linked in block', () => {
         cy.checkAuthorLink('.editors_block > .aut_det');
-        cy.visit('');
+        cy.visitSite('');
       });
       it('checks See All Picks link', () => {
         cy.getAndFind('.editors_block', '.aut_det')
