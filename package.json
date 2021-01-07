@@ -10,7 +10,7 @@
     "lint": "eslint examples",
     "lint:json": "eslint --ext .json examples",
     "stop-only": "stop-only --folder examples --skip node_modules --skip dist --skip .cache --skip build",
-    "test": "cypress run --record --key=abc123",
+    "test": "cypress run --record --key 92ee745a-0f39-42c9-ac84-dd132d141a0d",
     "test:ci": "node ./test-examples",
     "test:ci:brave": "node ./test-examples --brave",
     "test:ci:chrome": "node ./test-examples --chrome",
