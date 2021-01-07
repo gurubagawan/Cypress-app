@@ -303,7 +303,7 @@ context('Home Page French', () => {
     });
     it('checks video card title', () => {
       cy.checkTitleLink('.video_block');
-      cy.visitSite();
+      cy.visitFrenchSite();
     });
   });
 
@@ -322,6 +322,7 @@ context('Home Page French', () => {
       cy.getAndFind('.recipes_bl', '.moreLink').shouldHaveContent();
       cy.getAndFind('.recipes_bl', '.moreLink').checkLink();
       cy.getAndFind('.recipes_bl', '.moreLink').clickLink();
+      cy.visitFrenchSite();
     });
   });
   describe('tests for kid meals section ', () => {
