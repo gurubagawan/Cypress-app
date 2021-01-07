@@ -7,7 +7,7 @@ context('Home Page', () => {
     cy.wait('@initialLoad');
   });
 
-  describe.only('Main Element tests', () => {
+  describe('Main Element tests', () => {
     afterEach(function () {
       if (this.currentTest.state === 'failed') {
         Cypress.runner.stop();
@@ -41,7 +41,7 @@ context('Home Page', () => {
 
   // https://on.cypress.io/interacting-with-elements
 
-  describe.only('Nav bar tests', () => {
+  describe('Nav bar tests', () => {
     let navChildren;
     it('checks that the logo is there ', () => {
       cy.get('.td-header-logo').should('not.be.empty');
