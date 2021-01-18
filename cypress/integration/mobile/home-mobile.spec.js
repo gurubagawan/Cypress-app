@@ -1,10 +1,21 @@
-import * as helper from '../support/index';
+import * as helper from '../../support/index';
 
 context('Home Page', () => {
   before(() => {
+    cy.viewport('iphone-5');
     cy.intercept('POST', '/wp-admin/admin-ajax.php').as('initialLoad');
     cy.visitSite();
     cy.wait('@initialLoad');
+  });
+
+  beforeEach(() => {
+    cy.viewport('iphone-5');
+    cy.visitMobile('/', {
+      auth: {
+        username: Cypress.env('SITE_USER'),
+        password: Cypress.env('SITE_PASS'),
+      },
+    });
   });
 
   describe('Main Element tests', () => {
@@ -54,6 +65,9 @@ context('Home Page', () => {
         .then(($div) => {
           navChildren = $div.length;
         });
+    });
+    it.only('checks the body is mobile', () => {
+      cy.get('body').should('have.class', 'mobile');
     });
     it('checks that each nav item is a link', () => {
       for (let i = 0; i < 6; i++) {
