@@ -3,8 +3,7 @@ import * as helper from '../support/index';
 context('Single Article page test', () => {
   before(() => {
     cy.intercept('POST', '/wp-admin/admin-ajax.php').as('initialLoad');
-    cy.visitSite();
-    cy.get('.primary_bl > .block').click();
+    cy.visitSite('/what-is-plant-based-diet/');
     cy.wait('@initialLoad');
   });
   it('checks that main story is present', () => {
@@ -34,7 +33,7 @@ context('Single Article page test', () => {
       cy.get('.entry-date').shouldHaveContent();
     });
   });
-  describe.only('Editors block tests', () => {
+  describe('Editors block tests', () => {
     it('checks that editors block exists ', () => {
       cy.get('.td-pb-span4').shouldHaveContent();
     });
@@ -57,6 +56,21 @@ context('Single Article page test', () => {
       cy.get('.author-area > p').shouldHaveContent();
     });
   });
+  describe.only('tests for item carousel', () => {
+    it('checks that carousel exists', () => {
+      cy.get('.vc-carousal-wrap').shouldHaveContent();
+    });
+    it('checks that slider has working product cards', () => {
+      helper.checkItemCarousel('.vc-carousal-wrap', 3);
+    });
+    it('checks that slider next works', () => {
+      cy.checkSliderNext('.vc-carousal-wrap', '.title', '.vc-carousal-wrap', 1);
+    });
+    it('checks that slider previous works', () => {
+      cy.checkSliderPrev('.vc-carousal-wrap', '.title', '.vc-carousal-wrap', 1);
+    });
+  });
+
   describe('Related posts section tests', () => {
     it('checks that section exists ', () => {
       cy.get('#related_posts_section').shouldHaveContent();

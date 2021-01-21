@@ -260,7 +260,7 @@ context('Home Page', () => {
       });
     });
 
-    describe('Tests for the editor carousel', () => {
+    describe.only('Tests for the editor carousel', () => {
       let visibleLength = 0;
       it('checks that the slider has been initalized', () => {
         cy.getAndFind(

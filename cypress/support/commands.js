@@ -47,8 +47,8 @@ Cypress.Commands.overwrite(
   }
 );
 
-Cypress.Commands.add('visitSite', () => {
-  cy.visit('/', {
+Cypress.Commands.add('visitSite', (url = '/') => {
+  cy.visit(url, {
     auth: {
       username: Cypress.env('SITE_USER'),
       password: Cypress.env('SITE_PASS'),
@@ -189,7 +189,7 @@ Cypress.Commands.add(
       .find(titleClass)
       .then(($div) => {
         const initialTitle = $div.text();
-        cy.get(`${sliderSelect} > .slick-next`).click();
+        cy.getAndFind(sliderSelect, '.slick-next').click();
         cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .eq(skipAmount)
           .find(titleClass)
@@ -211,7 +211,7 @@ Cypress.Commands.add(
       .find(titleClass)
       .then(($div) => {
         const initialTitle = $div.text();
-        cy.get(`${sliderSelect} > .slick-prev`).click();
+        cy.getAndFind(sliderSelect, '.slick-prev').click();
         cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .first()
           .find(titleClass)
