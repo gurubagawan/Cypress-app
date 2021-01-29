@@ -54,7 +54,7 @@ context('Gift guide page', () => {
     it('checks that section has a byline ', () => {
       cy.get('.bg_blok > .section_dek').shouldHaveContent();
     });
-    describe.only('Editors profile tests', () => {
+    describe('Editors profile tests', () => {
       it('checks that profile exists and has a the right content', () => {
         cy.get('.infl_car_block > .block').shouldHaveContent();
         cy.get('.infl_car_block > .block').checkImage();
@@ -71,5 +71,33 @@ context('Gift guide page', () => {
         cy.checkSliderPrev('.col-9', '.prod_name', '.col-9', 1);
       });
     });
+    describe('tests for bottom row of editors', () => {
+      it('checks that row exists ', () => {
+        cy.get('.bg_blok > .block_bottom').shouldHaveContent();
+      });
+      it('checks that the first profile exists and has content', () => {
+        cy.get('.bg_blok > .block_bottom > :nth-child(1)').shouldHaveContent();
+        cy.get('.bg_blok > .block_bottom > :nth-child(1)').checkImage();
+        cy.get(
+          ':nth-child(1) > .inner-border > .meta_inf > .inf_rel'
+        ).checkLink();
+        cy.get(
+          ':nth-child(1) > .inner-border > .meta_inf > .by'
+        ).shouldHaveContent();
+      });
+    });
+  });
+  describe.only('Tests for Walmart.ca Container', () => {
+    it('checks that container exists', () => {
+      cy.get('.walmartcontainer').shouldHaveContent();
+    });
+    it('checks that container has a title', () => {
+      cy.get('.waltxt').shouldHaveContent();
+    });
+    for (let i = 1; i < 8; i++) {
+      it(`checks that walmart link ${i} is working`, () => {
+        cy.get(`.links > :nth-child(${i})`).checkLink();
+      });
+    }
   });
 });
