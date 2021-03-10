@@ -174,9 +174,7 @@ context('Home Page French', () => {
     });
     it('checks that seasonal section more link is working', () => {
       cy.getAndFind('.seasonal_posts', '.moreLink').first().checkLink();
-      cy.getAndFind('.seasonal_posts', '.moreLink')
-        .first()
-        .clickLink('/category');
+      cy.getAndFind('.seasonal_posts', '.moreLink').first().clickLink();
       cy.visitFrenchSite();
     });
   });
