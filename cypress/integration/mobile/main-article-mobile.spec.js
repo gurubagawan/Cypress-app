@@ -1,5 +1,3 @@
-import * as helper from '../../support/index';
-
 context('Single Article page mobile test', () => {
   before(() => {
     cy.intercept('POST', '/wp-admin/admin-ajax.php').as('initialLoad');
