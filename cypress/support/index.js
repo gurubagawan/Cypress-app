@@ -177,7 +177,7 @@ export const checkArticleAuthor = () => {
 
 export const checkSeasonalSection = (numOfPosts, index) => {
   // numOfPosts relates to how many posts are in the block, index is to differentiate if there is more than one row on the page
-  describe.only('Seasonal section tests', () => {
+  describe('Seasonal section tests', () => {
     checkSectionHeader('seasonal', '.seasonal_posts');
     it(`checks that ${numOfPosts} seasonal posts are visible`, () => {
       cy.get('.seasonal_row')
@@ -193,7 +193,6 @@ export const checkSeasonalSection = (numOfPosts, index) => {
       cy.getAndFind('.seasonal_posts', '.moreLink')
         .first()
         .checkLink('/category');
-      // cy.visitSite();
     });
   });
 };
