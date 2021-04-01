@@ -59,7 +59,6 @@ export const checkItemCarousel = (selector, rounds, lang = 'en') => {
 
 export const getCarouselLength = (selector) => {
   cy.getAndFind(selector, '[aria-hidden=false]').then(($div) => {
-    console.log($div.length);
     return $div.length;
   });
 };
@@ -104,5 +103,97 @@ export const checkRecipeBlock = (
   it(`checks that ${name} has a working image`, () => {
     cy.checkImageLink(selector);
     visitCorrectSite(lang);
+  });
+};
+
+export const checkArticleCrumbs = (CategoryName, ArticleName) => {
+  it('checks that bread crumbs exist', () => {
+    cy.get('.entry-crumbs').shouldHaveContent();
+  });
+  it('checks that bread crumb trail shows the category ', () => {
+    cy.getAndFind('.entry-crumbs', '.td-bred-no-url-last')
+      .eq(1)
+      .contains(CategoryName);
+  });
+  it('checks that bread crumb trail shows the title ', () => {
+    cy.getAndFind('.entry-crumbs', '.td-bred-no-url-last')
+      .eq(3)
+      .contains(ArticleName);
+  });
+};
+
+export const checkArticleHeader = () => {
+  describe('Article Header tests', () => {
+    it('checks that header block is present', () => {
+      cy.get('.td-post-header').shouldHaveContent();
+    });
+    it('checks that breadcrumb trail exists', () => {
+      cy.get('.entry-crumbs').shouldHaveContent();
+    });
+    it('checks that article has a header', () => {
+      cy.get('.td-post-title > .entry-title').shouldHaveContent();
+    });
+    it('checks that article has a sub heading', () => {
+      cy.get('.sub_title_main').shouldHaveContent();
+    });
+    it('checks that the social share icons are present', () => {
+      cy.get('.social_elements').shouldHaveContent();
+    });
+    it('checks that author link is present', () => {
+      cy.getAndFind('.td-post-author-name', 'a').shouldHaveContent();
+      cy.getAndFind('.td-post-author-name', 'strong').checkLink();
+    });
+    it('checks that publication date is tehre', () => {
+      cy.get('.entry-date').shouldHaveContent();
+    });
+  });
+};
+
+export const checkArticleAuthor = () => {
+  describe('Editors block tests', () => {
+    it('checks that editors block exists ', () => {
+      cy.get('.td-pb-span4').shouldHaveContent();
+    });
+    it('checks that block title is there', () => {
+      cy.get('.author-area > :nth-child(1)').shouldHaveContent();
+    });
+    it('checks that avatar image exists', () => {
+      cy.get('.avatar').should('be.visible');
+    });
+    it('checks that author link exists', () => {
+      cy.get('.author-name').checkLink();
+    });
+    it('checks that author role exists', () => {
+      cy.get('.author-role').shouldHaveContent();
+    });
+    it('checks that author social links exist', () => {
+      cy.get('.author-area > .author-social-links').shouldHaveContent();
+    });
+    it('checks that author bio exists', () => {
+      cy.get('.author-area > p').shouldHaveContent();
+    });
+  });
+};
+
+export const checkSeasonalSection = (numOfPosts, index) => {
+  // numOfPosts relates to how many posts are in the block, index is to differentiate if there is more than one row on the page
+  describe.only('Seasonal section tests', () => {
+    checkSectionHeader('seasonal', '.seasonal_posts');
+    it(`checks that ${numOfPosts} seasonal posts are visible`, () => {
+      cy.get('.seasonal_row')
+        .eq(index)
+        .find('.block')
+        .should('have.length', numOfPosts);
+    });
+    it('checks that seasonal section more link is present', () => {
+      cy.getAndFind('.seasonal_posts', '.moreLink').first().shouldHaveContent();
+    });
+    it('checks that seasonal section more link is working', () => {
+      cy.getAndFind('.seasonal_posts', '.moreLink').first().checkLink();
+      cy.getAndFind('.seasonal_posts', '.moreLink')
+        .first()
+        .checkLink('/category');
+      // cy.visitSite();
+    });
   });
 };
