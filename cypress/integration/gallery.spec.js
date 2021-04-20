@@ -49,36 +49,69 @@ context("Tests for gallery slideshow", () => {
   });
 
   describe.only("changing slide tests", () => {
-    let originalTitle
-    let originalPrice
-    let originalDesc
-    let originalNumber
-    before(()=>{
-      cy.getAndFind("[aria-hidden=false]", "h3.vc-informationbox-title").invoke('text').then((text)   =>   {
-        originalTitle = text
-      });
-      cy.getAndFind("[aria-hidden=false]", ".text-container").invoke('text').then((text)   =>   {
-        originalDesc = text
-      });
-      cy.get(".slick-counter").invoke('text').then((text)   =>   {
-        originalNumber = text
-      });
-      cy.get('.SlideshowInit > .slick-next').click()
-    })
+    let originalTitle;
+    let originalPrice;
+    let originalDesc;
+    let originalNumber;
+    before(() => {
+      cy.getAndFind("[aria-hidden=false]", "h3.vc-informationbox-title")
+        .invoke("text")
+        .then((text) => {
+          originalTitle = text;
+        });
+      cy.getAndFind("[aria-hidden=false]", ".text-container")
+        .invoke("text")
+        .then((text) => {
+          originalDesc = text;
+        });
+      cy.get(".slick-counter")
+        .invoke("text")
+        .then((text) => {
+          originalNumber = text;
+        });
+      cy.get(".SlideshowInit > .slick-next").click();
+    });
     it("checks that clicking next changes the product title", () => {
-      cy.getAndFind("[aria-hidden=false]", "h3.vc-informationbox-title").invoke('text').should((text)   =>   {
-        expect(text).not.to.eq(originalTitle)
-      });
+      cy.getAndFind("[aria-hidden=false]", "h3.vc-informationbox-title")
+        .invoke("text")
+        .should((text) => {
+          expect(text).not.to.eq(originalTitle);
+        });
     });
-    it('checks that clicking next changes the product title', () => {
-      cy.getAndFind("[aria-hidden=false]", ".text-container").invoke('text').should((text)   =>   {
-        expect(text).not.to.eq(originalDesc)
-      });
+    it("checks that clicking next changes the product title", () => {
+      cy.getAndFind("[aria-hidden=false]", ".text-container")
+        .invoke("text")
+        .should((text) => {
+          expect(text).not.to.eq(originalDesc);
+        });
     });
-    it('checks that clicking next changes the slide number', () => {
-      cy.get(".slick-counter").invoke('text').should((text)   =>   {
-        expect(text).not.to.eq(originalNumber)
-      });
+    it("checks that clicking next changes the slide number", () => {
+      cy.get(".slick-counter")
+        .invoke("text")
+        .should((text) => {
+          expect(text).not.to.eq(originalNumber);
+        });
+    });
+    it("checks that clicking view all slides works", () => {
+      cy.get(".slideshow-mode-container").click();
+      cy.get('[original-index="0"] > .content').shouldHaveContent();
+    });
+    it("checks that gallery view shows title picture and content", () => {
+      cy.get(
+        '[original-index="0"] > .content > .text-center'
+      ).shouldHaveContent();
+      cy.get(
+        '[original-index="0"] > .content > h3.vc-informationbox-title > a'
+      ).shouldHaveContent();
+      cy.get(
+        '[original-index="0"] > .content > .starRating'
+      ).shouldHaveContent();
+      cy.get(
+        '[original-index="0"] > .content > .flex-this-grid-view > .text-container > p'
+      ).shouldHaveContent();
+      cy.get(
+        '[original-index="0"] > .content > .flex-this-grid-view > .buy_nw'
+      ).shouldHaveContent();
     });
   });
 });
