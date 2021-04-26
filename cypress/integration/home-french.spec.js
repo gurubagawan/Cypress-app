@@ -41,25 +41,10 @@ context('Home Page French', () => {
     it('checks that trademark is present', () => {
       cy.get('.td-sub-footer-copy').shouldHaveContent();
     });
-    it('checks the footer links', () => {
+    it("checks the footer links", () => {
       for (let i = 0; i < 4; i++) {
-        cy.get('#menu-sub-footer-french').children().eq(i).checkLink();
+        cy.get("#menu-sub-footer-french").children().eq(i).checkLink();
       }
-    });
-    it('checks that footer social links exist', () => {
-      cy.get('.footer-social-links').shouldHaveContent();
-    });
-    it('checks pinterest link', () => {
-      cy.get('[data-event-tar=Pinterest]').shouldHaveContent();
-    });
-    it('checks facebook link', () => {
-      cy.get('[data-event-tar=Facebook]').shouldHaveContent();
-    });
-    it('checks twitter link', () => {
-      cy.get('[data-event-tar=Twitter]').shouldHaveContent();
-    });
-    it('checks instagram link', () => {
-      cy.get('[data-event-tar=Instagram]').shouldHaveContent();
     });
     it('checks that the english link works', () => {
       cy.get('#menu-item-1148-en').click();
