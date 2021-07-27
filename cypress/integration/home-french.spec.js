@@ -271,25 +271,6 @@ context('Home Page French', () => {
     });
   });
 
-  describe('Video block tests', () => {
-    it('checks that video block exists', () => {
-      cy.get('.video_block').shouldHaveContent();
-      cy.getAndFind('.video_block', 'iframe').should('be.visible');
-      cy.getAndFind('.video_block', '.meta_art').shouldHaveContent();
-    });
-    it('checks the video block read tag', () => {
-      cy.getAndFind('.video_block', '.readtime').shouldHaveContent();
-      cy.getAndFind('.video_block', '.readtime').contains('VIDÉO DE');
-    });
-    it('checks the video card sub-title', () => {
-      cy.getAndFind('.video_block', '.dek_art').shouldHaveContent();
-    });
-    it('checks video card title', () => {
-      cy.checkTitleLink('.video_block');
-      cy.visitFrenchSite();
-    });
-  });
-
   describe('tests for recipes section ', () => {
     helper.checkSectionHeader('Recipe', '.recipes_bl');
     for (let i = 1; i < 4; i++) {
