@@ -189,7 +189,7 @@ Cypress.Commands.add(
       .find(titleClass)
       .then(($div) => {
         const initialTitle = $div.text();
-        cy.getAndFind(sliderSelect, '.slick-next').click();
+        cy.getAndFind(sliderSelect, '.slick-next').first().click();
         cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .eq(skipAmount)
           .find(titleClass)
@@ -211,7 +211,7 @@ Cypress.Commands.add(
       .find(titleClass)
       .then(($div) => {
         const initialTitle = $div.text();
-        cy.getAndFind(sliderSelect, '.slick-prev').click();
+        cy.getAndFind(sliderSelect, '.slick-prev').first().click();
         cy.getAndFind(carouselSelector, '[aria-hidden=false]')
           .first()
           .find(titleClass)
