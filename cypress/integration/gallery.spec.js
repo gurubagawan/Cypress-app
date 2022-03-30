@@ -1,6 +1,6 @@
 import * as helper from '../support/index';
 
-context("Tests for gallery slideshow", () => {
+context.skip("Tests for gallery slideshow", () => {
   before(() => {
     cy.intercept("POST", "/wp-admin/admin-ajax.php").as("initialLoad");
     cy.visitSite("/best-toys-kids/?slide=1");
@@ -48,7 +48,7 @@ context("Tests for gallery slideshow", () => {
     });
   });
 
-  describe.only("changing slide tests", () => {
+  describe.skip("changing slide tests", () => {
     let originalTitle;
     let originalPrice;
     let originalDesc;
