@@ -180,19 +180,10 @@ export const checkSeasonalSection = (numOfPosts, index) => {
   describe('Seasonal section tests', () => {
     checkSectionHeader('seasonal', '.seasonal_posts');
     it(`checks that ${numOfPosts} seasonal posts are visible`, () => {
-      cy.get('.seasonal_row')
+      cy.get(".seasonal_row")
         .eq(index)
-        .find('.block')
-        .should('have.length', numOfPosts);
-    });
-    it('checks that seasonal section more link is present', () => {
-      cy.getAndFind('.seasonal_posts', '.moreLink').first().shouldHaveContent();
-    });
-    it('checks that seasonal section more link is working', () => {
-      cy.getAndFind('.seasonal_posts', '.moreLink').first().checkLink();
-      cy.getAndFind('.seasonal_posts', '.moreLink')
-        .first()
-        .checkLink('/category');
+        .find(".block")
+        .should("have.length", numOfPosts);
     });
   });
 };

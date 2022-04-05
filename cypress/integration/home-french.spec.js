@@ -1,10 +1,10 @@
 import * as helper from '../support/index';
 
-context.skip("Home Page French", () => {
+context("Home Page French", () => {
   before(() => {
     cy.intercept("POST", "/wp-admin/admin-ajax.php").as("initialLoad");
     cy.visitFrenchSite();
-    cy.wait("@initialLoad");
+    // cy.wait("@initialLoad");
   });
 
   // Check we're on the french page before each test
@@ -133,34 +133,6 @@ context.skip("Home Page French", () => {
         " #posts_slider",
         1
       );
-    });
-  });
-
-  describe("Seasonal section tests", () => {
-    helper.checkSectionHeader("seasonal", ".seasonal_posts");
-    it("checks that 6 seasonal posts are visible", () => {
-      cy.get(".seasonal_row").first().children().should("have.length", 6);
-    });
-    describe("checks that the 6 seasonal posts are working properly", () => {
-      for (let i = 1; i < 7; i++) {
-        helper.checkStoryBlock(
-          `.home_v2 > :nth-child(4) >.seasonal_row > :nth-child(${i}) `,
-          `Seasonal row 1 post ${i}`,
-          "fr"
-        );
-      }
-      it("checks that there are 6 children", () => {
-        cy.get(".seasonal_row").first().children().should("have.length", 6);
-      });
-    });
-
-    it("checks that seasonal section more link is present", () => {
-      cy.getAndFind(".seasonal_posts", ".moreLink").first().shouldHaveContent();
-    });
-    it("checks that seasonal section more link is working", () => {
-      cy.getAndFind(".seasonal_posts", ".moreLink").first().checkLink();
-      cy.getAndFind(".seasonal_posts", ".moreLink").first().clickLink();
-      cy.visitFrenchSite();
     });
   });
 

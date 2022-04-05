@@ -1,9 +1,9 @@
 import * as helper from '../support/index';
 
-context.skip("Tests for gallery slideshow", () => {
+context("Tests for gallery slideshow", () => {
   before(() => {
     cy.intercept("POST", "/wp-admin/admin-ajax.php").as("initialLoad");
-    cy.visitSite("/best-toys-kids/?slide=1");
+    cy.visitSite("/gifts-for-couples/?slide=1");
   });
 
   describe("Inital load tests", () => {
@@ -25,9 +25,6 @@ context.skip("Tests for gallery slideshow", () => {
     it("checks that product has a review box", () => {
       cy.get(".starRating").shouldHaveContent();
     });
-    it("checks that product has a price", () => {
-      cy.get("a.price").shouldHaveContent();
-    });
     it("checks that product has a shop now button", () => {
       cy.get(".btnshop_now").shouldHaveContent();
     });
@@ -48,7 +45,7 @@ context.skip("Tests for gallery slideshow", () => {
     });
   });
 
-  describe.skip("changing slide tests", () => {
+  describe("changing slide tests", () => {
     let originalTitle;
     let originalPrice;
     let originalDesc;
