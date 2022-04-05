@@ -1,5 +1,6 @@
 {
   "projectId": "7vm6ux",
   "viewportWidth": 1600,
-  "viewportHeight": 900
+  "viewportHeight": 900,
+  "requestTimeout": 10000
 }
