@@ -1,6 +1,6 @@
 import * as helper from '../support/index';
 
-context.skip("Tests for indidivdual gift guides", () => {
+context("Tests for indidivdual gift guides", () => {
   before(() => {
     cy.intercept("POST", "/wp-admin/admin-ajax.php").as("initialLoad");
     cy.visitSite("/best-toys-kids/");
@@ -10,6 +10,8 @@ context.skip("Tests for indidivdual gift guides", () => {
     helper.checkArticleCrumbs(
       "Gift Guides",
       "We Pick 2021’s Best Toys for Kids Aged 1 to 10"
+      // check if there is a second element
+      // get the content of the title and compare against that
     );
 
     it("checks that title exists", () => {

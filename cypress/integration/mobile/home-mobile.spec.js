@@ -2,10 +2,10 @@ import * as helper from '../../support/index';
 
 context('Home Page', () => {
   before(() => {
-    cy.viewport('iphone-5');
-    cy.intercept('POST', '/wp-admin/admin-ajax.php').as('initialLoad');
+    cy.viewport("iphone-5");
+    cy.intercept("POST", "/wp-admin/admin-ajax.php").as("initialLoad");
     cy.visitSite();
-    cy.wait('@initialLoad');
+    // cy.wait('@initialLoad');
   });
 
   beforeEach(() => {
