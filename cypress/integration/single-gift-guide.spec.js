@@ -1,6 +1,6 @@
 import * as helper from '../support/index';
 
-context("Tests for indidivdual gift guides", () => {
+context.skip("Tests for indidivdual gift guides", () => {
   before(() => {
     cy.intercept("POST", "/wp-admin/admin-ajax.php").as("initialLoad");
     cy.visitSite("/best-toys-kids/");
