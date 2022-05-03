@@ -41,7 +41,7 @@ context('Home Page', () => {
 
   // https://on.cypress.io/interacting-with-elements
 
-  describe.only('Nav bar tests', () => {
+  describe('Nav bar tests', () => {
     let navChildren;
     let elementsWithChildren = [];
     it('checks that the logo is there ', () => {
@@ -86,24 +86,10 @@ context('Home Page', () => {
         cy.get('#menu-sub-footer').children().eq(i).checkLink();
       }
     });
-    it('checks that footer social links exist', () => {
-      cy.get('.footer-social-links').shouldHaveContent();
-    });
-    it('checks pinterest link', () => {
-      cy.get('[data-event-tar=Pinterest]').shouldHaveContent();
-    });
-    it('checks facebook link', () => {
-      cy.get('[data-event-tar=Facebook]').shouldHaveContent();
-    });
-    it('checks twitter link', () => {
-      cy.get('[data-event-tar=Twitter]').shouldHaveContent();
-    });
-    it('checks instagram link', () => {
-      cy.get('[data-event-tar=Instagram]').shouldHaveContent();
-    });
     it('checks that the french link works', () => {
       cy.get('#menu-item-887-fr').click();
       cy.get('body').should('have.class', 'fr');
+      cy.clearCookies()
       cy.visitSite('/');
     });
   });
@@ -202,12 +188,6 @@ context('Home Page', () => {
       cy.visitSite();
     });
     describe('checks that the 6 seasonal posts are working properly', () => {
-      for (let i = 1; i < 7; i++) {
-        helper.checkStoryBlock(
-          `.home_v2 > :nth-child(4) >.seasonal_row > :nth-child(${i}) `,
-          `Seasonal row 1 post ${i}`
-        );
-      }
       it('checks that there are 6 children', () => {
         cy.get('.seasonal_row').first().children().should('have.length', 6);
       });
@@ -260,7 +240,7 @@ context('Home Page', () => {
       });
     });
 
-    describe.only('Tests for the editor carousel', () => {
+    describe('Tests for the editor carousel', () => {
       let visibleLength = 0;
       it('checks that the slider has been initalized', () => {
         cy.getAndFind(
@@ -317,25 +297,6 @@ context('Home Page', () => {
     });
   });
 
-  describe('Video block tests', () => {
-    it('checks that video block exists', () => {
-      cy.get('.video_block').shouldHaveContent();
-      cy.getAndFind('.video_block', 'iframe').should('be.visible');
-      cy.getAndFind('.video_block', '.meta_art').shouldHaveContent();
-    });
-    it('checks the video block read tag', () => {
-      cy.getAndFind('.video_block', '.readtime').shouldHaveContent();
-      cy.getAndFind('.video_block', '.readtime').contains('watch');
-    });
-    it('checks the video card sub-title', () => {
-      cy.getAndFind('.video_block', '.dek_art').shouldHaveContent();
-    });
-    it('checks video card title', () => {
-      cy.checkTitleLink('.video_block');
-      cy.visitSite();
-    });
-  });
-
   describe('tests for recipes section ', () => {
     helper.checkSectionHeader('Recipe', '.recipes_bl');
     for (let i = 1; i < 4; i++) {
@@ -353,6 +314,7 @@ context('Home Page', () => {
       cy.visitSite();
     });
   });
+
   describe('tests for kid meals section ', () => {
     helper.checkSectionHeader('Kid Meals', '.bottom');
     for (let i = 1; i < 4; i++) {
@@ -376,14 +338,6 @@ context('Home Page', () => {
         catAmount = $div.length;
       });
       cy.get('.section_head').shouldHaveContent();
-    });
-    it('checks the scroll to top', () => {
-      cy.get('.section_head').click();
-      cy.get('.td-scroll-up').click();
-      cy.wait(1000);
-      cy.window().then(($window) => {
-        expect($window.scrollY).to.be.closeTo(0, 100);
-      });
     });
 
     it(`category links`, () => {
