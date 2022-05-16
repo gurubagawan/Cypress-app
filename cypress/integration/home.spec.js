@@ -87,6 +87,10 @@ context('Home Page', () => {
       }
     });
     it('checks that the french link works', () => {
+      cy.get('#menu-item-887-fr > a')      // sets <a> as the subject
+        .invoke('attr', 'href')            // changes subject to href attribute              // now test the href
+        .and('contain', 'fr')
+        
       cy.get('#menu-item-887-fr').click();
       cy.get('body').should('have.class', 'fr');
       cy.clearCookies()
@@ -237,6 +241,12 @@ context('Home Page', () => {
           .find('.read_more')
           .clickLink();
         cy.visitSite();
+      });
+      it.only('Checks that Editors picks articles have links under you might also like', () => {
+        cy.get('.text-pink').click()
+        cy.getAndFind('#toc_section_yml', '.content_block > a').first().find('img').should('exist')
+        cy.getAndFind('#toc_section_yml', '.content_block').first().checkLink()
+
       });
     });
 
