@@ -1,14 +1,14 @@
 import X2JS from 'x2js';
 const axios = require('axios');
 
-let sitemap = ['https://ideas.walmart.ca/sitemap.xml']
+let sitemap = ['https://kcfinalstg.wpengine.com/sitemap.xml/']
 let innerSitemap = ['']
 
 context('Home Page', () => {
-  let URLsToCheck = [{loc: 'https://ideas.walmart.ca/'},{loc: 'https://ideas.walmart.ca/'}]
+  let URLsToCheck = [{loc: 'https://kcfinalstg.wpengine.com/'},{loc: 'https://kcfinalstg.wpengine.com/'}]
   describe('Tests for footer', () => { 
     before(()=>{
-      cy.request('https://ideas.walmart.ca/sitemap.xml')
+      cy.request('https://kcfinalstg.wpengine.com/sitemap.xml/')
       .then(res => {
         console.log(res);
         const x2js = new X2JS()
@@ -109,7 +109,7 @@ context('Home Page', () => {
    describe('sitemap', () => {
     it('fetches the sitemap.xml', () => {
       // https://on.cypress.io/request
-      cy.request('https://ideas.walmart.ca/sitemap.xml')
+      cy.request('https://kcfinalstg.wpengine.com/sitemap.xml/')
         .then((res) => {
           const x2js = new X2JS()
           const json = x2js.xml2js(res.body)
@@ -137,17 +137,20 @@ context('Home Page', () => {
   })
   describe('Tests for footer', () => { 
     it.only('checks every site ', () =>{
-      cy.request('https://ideas.walmart.ca/sitemap.xml').then((resp)=>{
+      cy.request('https://kcfinalstg.wpengine.com/sitemap.xml/').then((resp)=>{
         const x2js = new X2JS()
         const json = x2js.xml2js(resp.body)
         const sitemapindex = json['sitemapindex']
         let { sitemap } = sitemapindex
+        cy.log(sitemap)
         for (let i = 0; i < sitemap.length; i++) {
           cy.request(sitemap[i].loc).then((response)=>{
             const innerJSON = x2js.xml2js(response.body)
+            cy.log(innerJSON)
             const innerURLs = innerJSON['urlset'].url
             if (Array.isArray(innerURLs)){
               for (let j = 0; j < innerURLs; j++) {
+                if(innerURLs[j].loc.includes("ideas.walmart")){ continue }
                 cy.visit(innerURLs[j].loc, {failOnStatusCode: false})
                 cy.get('.td-sub-footer-container').should('exist')
               }
