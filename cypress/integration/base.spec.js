@@ -1,5 +1,6 @@
 import X2JS from 'x2js';
 const axios = require('axios');
+const jsonAssertion = require("soft-assert")
 
 let sitemap = ['https://kcfinalstg.wpengine.com/sitemap.xml/']
 let innerSitemap = ['']
@@ -149,16 +150,18 @@ context('Home Page', () => {
             cy.log(innerJSON)
             const innerURLs = innerJSON['urlset'].url
             if (Array.isArray(innerURLs)){
-              for (let j = 0; j < innerURLs; j++) {
+              for (let j = 0; j < innerURLs.length; j++) {
                 if(innerURLs[j].loc.includes("ideas.walmart")){ continue }
                 cy.visit(innerURLs[j].loc, {failOnStatusCode: false})
-                cy.get('.td-sub-footer-container').should('exist')
+                const footer =  cy.get('.td-sub-footer-container')
+                jsonAssertion.softAssert(footer.length, 1, "Footer existss");
               }
             } else {
               if(innerURLs.loc.includes("ideas.walmart")){ return }
 
               cy.visit(innerURLs.loc,  {failOnStatusCode: false})
-              cy.get('.td-sub-footer-container').should('exist')
+              const footer =  cy.get('.td-sub-footer-container')
+              jsonAssertion.softAssert(footer.length, 1, "Footer existss");
             }
           })
         }
