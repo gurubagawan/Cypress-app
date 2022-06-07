@@ -155,6 +155,8 @@ context('Home Page', () => {
                 cy.get('.td-sub-footer-container').should('exist')
               }
             } else {
+              if(innerURLs.loc.includes("ideas.walmart")){ return }
+
               cy.visit(innerURLs.loc,  {failOnStatusCode: false})
               cy.get('.td-sub-footer-container').should('exist')
             }
