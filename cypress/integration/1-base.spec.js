@@ -342,7 +342,7 @@ describe('sitemap', () => {
 
 describe.only('Last ditch', ()=>{
   sitemap.forEach(async(obj)=>{
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 4000; i++) {
       const element = obj[i];
       it('Tests URL ',function(){
         cy.request(obj.loc).then((resp)=>{
