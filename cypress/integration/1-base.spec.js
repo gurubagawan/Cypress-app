@@ -341,8 +341,8 @@ describe('sitemap', () => {
 // })
 
 describe.only('Last ditch', ()=>{
-  sitemap.forEach(async(obj)=>{
-    for (let i = 0; i < 1000; i++) {
+  sitemap.forEach((obj)=>{
+    for (let i = 0; i < 100; i++) {
       it('Tests URL ',function(){
         cy.request(obj.loc).then((resp)=>{
           const x2js = new X2JS()
