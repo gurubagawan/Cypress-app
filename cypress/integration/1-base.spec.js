@@ -360,7 +360,7 @@ describe('sitemap', () => {
 
 describe.only('Last ditch', ()=>{
   sitemap1.forEach((obj)=>{
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 5; i++) {
       it('Tests URL ',function(){
         cy.request(obj.loc).then((resp)=>{
           const x2js = new X2JS()
