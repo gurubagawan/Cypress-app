@@ -280,7 +280,7 @@ const sitemap6 = [
     }
 ]
 
-const sitemap = [...sitemap1]
+const sitemap = [...sitemap1, ...sitemap2, ...sitemap3]
 
 describe('sitemap', () => {
   let innerURLS
@@ -362,7 +362,7 @@ describe('sitemap', () => {
 
 describe.only('Last ditch', ()=>{
   sitemap.forEach((obj)=>{
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 50; i++) {
       it('Tests URL ',function(){
         cy.request(obj.loc).then((resp)=>{
           const x2js = new X2JS()
