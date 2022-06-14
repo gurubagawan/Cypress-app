@@ -2,8 +2,7 @@ const { stringify } = require('mocha/lib/utils')
 const X2JS = require('x2js')
 const axios = require('axios').default
 
-
-const sitemap = [
+const sitemap1 = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-misc.xml",
         "lastmod": "2022-06-09T14:33:35+00:00"
@@ -31,7 +30,12 @@ const sitemap = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2022-01.xml",
         "lastmod": "2022-01-31T21:58:37+00:00"
-    },
+    }
+]
+
+
+
+const sitemap2 = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2021-11.xml",
         "lastmod": "2021-11-16T19:19:04+00:00"
@@ -63,7 +67,10 @@ const sitemap = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-05.xml",
         "lastmod": "2020-11-09T13:22:47+00:00"
-    },
+    }
+]
+
+const sitemap3 = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-03.xml",
         "lastmod": "2022-05-27T13:26:43+00:00"
@@ -100,6 +107,10 @@ const sitemap = [
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2021-11.xml",
         "lastmod": "2022-04-19T19:35:32+00:00"
     },
+]
+
+const sitemap4 = [
+    
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2021-10.xml",
         "lastmod": "2022-05-12T15:35:03+00:00"
@@ -163,7 +174,10 @@ const sitemap = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2020-07.xml",
         "lastmod": "2021-04-22T22:03:37+00:00"
-    },
+    }
+]
+
+const sitemap5 = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2020-06.xml",
         "lastmod": "2020-11-25T15:52:34+00:00"
@@ -224,6 +238,10 @@ const sitemap = [
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2018-12.xml",
         "lastmod": "2020-04-16T15:25:46+00:00"
     },
+
+]
+
+const sitemap6 = [
     {
         "loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2018-11.xml",
         "lastmod": "2020-04-16T15:25:57+00:00"
@@ -341,7 +359,7 @@ describe('sitemap', () => {
 // })
 
 describe.only('Last ditch', ()=>{
-  sitemap.forEach((obj)=>{
+  sitemap1.forEach((obj)=>{
     for (let i = 0; i < 100; i++) {
       it('Tests URL ',function(){
         cy.request(obj.loc).then((resp)=>{

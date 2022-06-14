@@ -43,6 +43,7 @@
     "x2js": "^3.4.3"
   },
   "devDependencies": {
-    "cy-mobile-commands": "^0.2.1"
+    "cy-mobile-commands": "^0.2.1",
+    "cypress-each": "^1.11.0"
   }
 }
