@@ -271,14 +271,14 @@ const fullMap = [
 ]
 
 
-for (let i = 0; i < fullMap.length; i++) {
-	const sitemap = fullMap[i];
-	describe('Full Map', ()=>{
+fullMap.forEach((sitemap, index)=> {
+	describe(`Map Group ${index} `, ()=>{
 		before(()=>{
 			cy.wait(10000)
+			cy.log(fullMap.length)
 		})
 		sitemap.forEach((obj)=>{
-			for (let i = 0; i < 50; i++) {
+			for (let i = 0; i < 10; i++) {
 				it('Tests URL ',function(){
 					cy.request(obj.loc).then((resp)=>{
 						const x2js = new X2JS()
@@ -286,12 +286,14 @@ for (let i = 0; i < fullMap.length; i++) {
 						const innerJSON = x2js.xml2js(resp.body)
 						console.log(innerJSON)
 						if(innerJSON.urlset?.url[1]){
-								if(!innerJSON.urlset?.url[i]){this.skip()}
+								if(!innerJSON.urlset?.url[i]){return}
 								cy.visit(innerJSON.urlset.url[i].loc)
 								cy.get('head meta[name="robots"]').should('exist');
 								cy.get('.td-sub-footer-menu').should('exist')
 						} else {
-								if(!innerJSON.urlset?.url){this.skip()}
+								if(!innerJSON.urlset?.url || i > 1 ){
+									return
+								}
 								cy.visit(innerJSON.urlset.url.loc)
 								cy.get('head meta[name="robots"]').should('exist');
 								cy.get('.td-sub-footer-menu').should('exist')
@@ -301,5 +303,5 @@ for (let i = 0; i < fullMap.length; i++) {
 			}
 		})
 	})
-}
+})
     
