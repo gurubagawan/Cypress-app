@@ -188,6 +188,25 @@ export const checkSeasonalSection = (numOfPosts, index) => {
   });
 };
 
+export const checkICIDLinks = (url, selector, gallery=false, sub="") =>{
+	it(`checks the ICID tag for ${url}`, () => {
+		cy.visit(`${sub}/${url}`)
+		cy.get('body').click(0, 0)
+		cy.wait(5000)
+		if(gallery){
+			cy.get('.textLinkInit').click
+		}
+		cy.get(selector).then((arr)=>{
+			for (let i = 0; i < arr.length; i++) {
+				cy.get(selector)
+				.eq(i)
+				.checkICID(url)
+				
+			}
+		})
+ })
+}
+
 export const fullMap = [
 	[
 		{
