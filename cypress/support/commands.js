@@ -101,6 +101,12 @@ Cypress.Commands.add('getAndFind', (primarySelector, secondarySelector) => {
   cy.get(primarySelector).find(secondarySelector);
 });
 
+Cypress.Commands.add('checkICID', { prevSubject: true }, (selector, string) => {
+  cy.get(selector).find('a').invoke('attr', 'href').then((href)=>{
+    expect(href).to.contain(string)
+  });
+});
+
 //Find the title class within an element, check that its visible, not empty, and that the link works
 Cypress.Commands.add(
   'checkTitleLink',
