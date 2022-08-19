@@ -10,11 +10,11 @@ context('ICID Tests', ()=>{
       cy.get('.slick-arrow').should('exist')
     });
 
-    checkICIDLinks('hoverboard-buying-guide', '.single_list')
-    checkICIDLinks('teacher-gifts', '.article_slider', true)
-    checkICIDLinks('special-needs-toys', '.single_gg_item')
-    checkICIDLinks('best-computer-monitors', '.single_comp_table')
-    checkICIDLinks('make-ahead-cinnamon-bun-casserole', '.single-prod', false, '/recipes')
-    checkICIDLinks('best-gifts-for-dad', '.primaryItem')
+    checkICIDLinks('hoverboard-buying-guide', '[href*="walmart.ca"]')
+    checkICIDLinks('teacher-gifts', '[href*="walmart.ca"]', true)
+    checkICIDLinks('special-needs-toys', '[href*="walmart.ca"]')
+    checkICIDLinks('best-computer-monitors', '[href*="walmart.ca"]')
+    checkICIDLinks('make-ahead-cinnamon-bun-casserole', '[href*="walmart.ca"]', false, '/recipes')
+    checkICIDLinks('best-gifts-for-dad', '[href*="walmart.ca"]')
    })
 })
