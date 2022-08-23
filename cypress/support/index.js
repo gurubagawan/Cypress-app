@@ -198,8 +198,7 @@ export const checkICIDLinks = (url, selector, gallery=false, sub="") =>{
 		}
 		cy.get(selector).then((arr)=>{
 			for (let i = 0; i < arr.length; i++) {
-				cy.get(selector)
-				.eq(i)
+				cy.wrap(arr[i])
 				.checkICID(url, i === arr.length -1 )
 			}
 		})

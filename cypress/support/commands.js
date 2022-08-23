@@ -102,8 +102,7 @@ Cypress.Commands.add('getAndFind', (primarySelector, secondarySelector) => {
 });
 
 Cypress.Commands.add('checkICID', { prevSubject: true }, (selector, string, isLast=false) => {
-  cy.log(isLast)
-  cy.get(selector).invoke('attr', 'href').then((href)=>{
+  cy.wrap(selector).invoke('attr', 'href').then((href)=>{
     if (isLast){
       expect(href).to.contain('ContentPortal_TipsAndIdeas_footer')
     } else {
