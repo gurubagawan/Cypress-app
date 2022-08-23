@@ -1,8 +1,8 @@
 import { checkICIDLinks } from "../support";
 
 context('ICID Tests', ()=>{
-  describe.skip('Load page', () => {
-    it('checks this ', () => {
+  describe('Load page', () => {
+    it.skip('checks this ', () => {
       
       cy.visit('/hoverboard-buying-guide')
       cy.get('body').click(0, 0)
