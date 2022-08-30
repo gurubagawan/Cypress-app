@@ -205,6 +205,13 @@ export const checkICIDLinks = (url, selector, gallery=false, sub="") =>{
  })
 }
 
+export const checkMetaTag = () =>{
+	cy.get('head meta[name="robots"]').should('exist');
+    cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
+      expect(cont).to.not.contain('noindex')
+    });
+}
+
 export const fullMap = [
 	[
 		{

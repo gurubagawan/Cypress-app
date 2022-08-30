@@ -1,6 +1,6 @@
 const { stringify } = require('mocha/lib/utils')
 const X2JS = require('x2js')
-const { fullMap } = require('../support')
+const { fullMap, checkMetaTag } = require('../support')
 const axios = require('axios').default
 
 fullMap.forEach((sitemap, index)=> {
@@ -19,14 +19,14 @@ fullMap.forEach((sitemap, index)=> {
 						if(innerJSON.urlset?.url[1]){
 								if(!innerJSON.urlset?.url[i]){return}
 								cy.visit(innerJSON.urlset.url[i].loc)
-								cy.get('head meta[name="robots"]').should('exist');
+								checkMetaTag()
 								cy.get('.td-sub-footer-menu').should('exist')
 						} else {
 								if(!innerJSON.urlset?.url || i > 1 ){
 									return
 								}
 								cy.visit(innerJSON.urlset.url.loc)
-								cy.get('head meta[name="robots"]').should('exist');
+								checkMetaTag()
 								cy.get('.td-sub-footer-menu').should('exist')
 						}
 					})
