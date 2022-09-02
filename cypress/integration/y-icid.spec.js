@@ -1,15 +1,7 @@
 import { checkICIDLinks } from "../support";
 
 context('ICID Tests', ()=>{
-  describe('Load page', () => {
-    it.skip('checks this ', () => {
-      
-      cy.visit('/hoverboard-buying-guide')
-      cy.get('body').click(0, 0)
-
-      cy.get('.slick-arrow').should('exist')
-    });
-
+  describe.skip('Load page', () => {
     checkICIDLinks('hoverboard-buying-guide', '[href*="walmart.ca"]')
     checkICIDLinks('teacher-gifts', '[href*="walmart.ca"]', true)
     checkICIDLinks('special-needs-toys', '[href*="walmart.ca"]')
