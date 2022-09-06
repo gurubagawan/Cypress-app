@@ -13,7 +13,7 @@ fullMap.forEach((sitemap, index)=> {
 		sitemap.forEach((obj)=>{
 				for (let j = 0; j < 100; j+=10) {
 				for (let i = 0; i < 10; i++) {
-					it(`Tests URL ${obj.loc}`,function(){
+					it(`Tests URL ${obj.loc}`,()=>{
 						cy.request(obj.loc).then((resp)=>{
 							const x2js = new X2JS()
 							// console.log(resp)
