@@ -3,15 +3,15 @@ const X2JS = require('x2js')
 const { fullMap, checkMetaTag } = require('../support')
 const axios = require('axios').default
 
-for (let j = 0; j < 100; j+=10) {
-	
-	fullMap.forEach((sitemap, index)=> {
-		describe(`Map Group ${index+1} `, ()=>{
-			before(()=>{
-				cy.wait(10000)
-				cy.log(fullMap.length)
-			})
-			sitemap.forEach((obj)=>{
+
+fullMap.forEach((sitemap, index)=> {
+	describe(`Map Group ${index+1} `, ()=>{
+		before(()=>{
+			cy.wait(10000)
+			cy.log(fullMap.length)
+		})
+		sitemap.forEach((obj)=>{
+				for (let j = 0; j < 100; j+=10) {
 				for (let i = 0; i < 10; i++) {
 					it(`Tests URL ${obj.loc}`,function(){
 						cy.request(obj.loc).then((resp)=>{
@@ -34,8 +34,8 @@ for (let j = 0; j < 100; j+=10) {
 						})
 					});
 				}
+			}
 			})
 		})
 	})
-}
 	
