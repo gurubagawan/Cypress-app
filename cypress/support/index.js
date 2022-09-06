@@ -215,10 +215,6 @@ export const checkMetaTag = () =>{
 export const fullMap = [
 	[
 		{
-				"loc": "https://kcfinalstg.wpengine.com/sitemap-misc.xml",
-				"lastmod": "2022-06-09T14:33:35+00:00"
-		},
-		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-tax-post_tag.xml",
 				"lastmod": "2022-06-09T14:33:35+00:00"
 		},
