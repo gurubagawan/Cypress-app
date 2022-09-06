@@ -10,7 +10,7 @@ fullMap.forEach((sitemap, index)=> {
 			cy.log(fullMap.length)
 		})
 		sitemap.forEach((obj)=>{
-			for (let i = 0; i < 10; i++) {
+			for (let i = 0; i < 100; i++) {
 				it(`Tests URL ${obj.loc}`,function(){
 					cy.request(obj.loc).then((resp)=>{
 						const x2js = new X2JS()
@@ -22,7 +22,7 @@ fullMap.forEach((sitemap, index)=> {
 								checkMetaTag()
 								cy.get('.td-sub-footer-menu').should('exist')
 						} else {
-								if(!innerJSON.urlset?.url || i > 1 ){
+								if(!innerJSON.urlset?.url){
 									return
 								}
 								cy.visit(innerJSON.urlset.url.loc)
