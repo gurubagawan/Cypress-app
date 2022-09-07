@@ -224,15 +224,15 @@ export const checkCrawler = (j) => {
 				cy.log(fullMap.length)
 			})
 			sitemap.forEach((obj)=>{
-				for (let i = 0; i < 10; i++) {
+				for (let i = j; i < j+10; i++) {
 					it(`Tests URL ${obj.loc}`,()=>{
 						cy.request(obj.loc).then((resp)=>{
 							const x2js = new X2JS()
 							// console.log(resp)
 							const innerJSON = x2js.xml2js(resp.body)
 							if(innerJSON.urlset?.url[1]){
-								if(!innerJSON.urlset?.url[i+j]){return}
-								cy.visit(innerJSON.urlset.url[i+j].loc)
+								if(!innerJSON.urlset?.url[i]){return}
+								cy.visit(innerJSON.urlset.url[i].loc)
 								checkMetaTag()
 								cy.get('.td-sub-footer-menu').should('exist')
 							} else {
