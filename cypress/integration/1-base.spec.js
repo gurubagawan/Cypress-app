@@ -39,7 +39,46 @@ const axios = require('axios').default
 // 		})
 // 	})
 
-for (let j = 0; j < 100; j++) {
-	checkCrawler(j)
-}
+for (let index = 0; index < 1000; index+= 100) {
 	
+	for (let j = 0; j < 10; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 10; j < 20; j++) {
+		checkCrawler(j+index)
+	}
+
+	for (let j = 20; j < 30; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 30; j < 40; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 40; j < 50; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 50; j < 60; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 60; j < 70; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 70; j < 80; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 80; j < 90; j++) {
+		checkCrawler(j)
+	}
+
+	for (let j = 90; j < 100; j++) {
+		checkCrawler(j)
+	}
+
+}
