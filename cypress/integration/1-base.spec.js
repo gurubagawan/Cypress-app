@@ -39,86 +39,87 @@ const axios = require('axios').default
 // 		})
 // 	})
 
-	
-for (let j = 0; j < 10; j++) {
+
+let i = 10
+for (let j = 0; j < i; j++) {
 	checkCrawler(j)
 }
 
-for (let j = 10; j < 20; j++) {
-	checkCrawler(j)
-}
+// for (let j = 10; j < 20; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 20; j < 30; j++) {
-	checkCrawler(j)
-}
+// for (let j = 20; j < 30; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 30; j < 40; j++) {
-	checkCrawler(j)
-}
+// for (let j = 30; j < 40; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 40; j < 50; j++) {
-	checkCrawler(j)
-}
+// for (let j = 40; j < 50; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 50; j < 60; j++) {
-	checkCrawler(j)
-}
+// for (let j = 50; j < 60; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 60; j < 70; j++) {
-	checkCrawler(j)
-}
+// for (let j = 60; j < 70; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 70; j < 80; j++) {
-	checkCrawler(j)
-}
+// for (let j = 70; j < 80; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 80; j < 90; j++) {
-	checkCrawler(j)
-}
+// for (let j = 80; j < 90; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 90; j < 100; j++) {
-	checkCrawler(j)
-}
+// for (let j = 90; j < 100; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 100; j < 110; j++) {
-	checkCrawler(j)
-}
+// for (let j = 100; j < 110; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 110; j < 120; j++) {
-	checkCrawler(j)
-}
+// for (let j = 110; j < 120; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 120; j < 130; j++) {
-	checkCrawler(j)
-}
+// for (let j = 120; j < 130; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 130; j < 140; j++) {
-	checkCrawler(j)
-}
+// for (let j = 130; j < 140; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 140; j < 150; j++) {
-	checkCrawler(j)
-}
+// for (let j = 140; j < 150; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 150; j < 160; j++) {
-	checkCrawler(j)
-}
+// for (let j = 150; j < 160; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 160; j < 170; j++) {
-	checkCrawler(j)
-}
+// for (let j = 160; j < 170; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 170; j < 180; j++) {
-	checkCrawler(j)
-}
+// for (let j = 170; j < 180; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 180; j < 190; j++) {
-	checkCrawler(j)
-}
+// for (let j = 180; j < 190; j++) {
+// 	checkCrawler(j)
+// }
 
-for (let j = 190; j < 200; j++) {
-	checkCrawler(j)
-}
+// for (let j = 190; j < 200; j++) {
+// 	checkCrawler(j)
+// }
 
 
 
