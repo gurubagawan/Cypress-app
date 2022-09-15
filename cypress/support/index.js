@@ -223,9 +223,6 @@ export const checkCrawler = (j) => {
 				cy.wait(10000)
 				cy.log(fullMap.length)
 			})
-			after(()=>{
-				cy.wait(10000)
-			})
 			sitemap.forEach((obj)=>{
 				// for (let i = j; i < j+10; i++) {
 					it(`Tests URL ${obj.loc}`,()=>{

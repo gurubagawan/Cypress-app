@@ -40,7 +40,7 @@ const axios = require('axios').default
 // 	})
 
 
-let i = 50
+let i = 10
 for (let j = 0; j < i; j++) {
 	checkCrawler(j)
 }
