@@ -5,7 +5,7 @@ const axios = require('axios').default
 
 
 
-let i = 90
+let i = 285
 for (let j = i; j < i+15; j++) {
 	checkCrawler(j)
 }
