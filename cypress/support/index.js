@@ -18,6 +18,10 @@ import './commands';
 import 'cy-mobile-commands';
 const X2JS = require('x2js')
 const axios = require('axios').default
+const jsonAssertion = require("soft-assert")
+const { proxy, flush } = require("@alfonso-presa/soft-assert");
+const softExpect = proxy(expect);
+const softAssert = proxy(assert);
 
 
 
@@ -209,18 +213,28 @@ export const checkICIDLinks = (url, selector, gallery=false, sub="") =>{
  })
 }
 
-export const checkMetaTag = () =>{
+export const checkMetaTag = (url) =>{
 	cy.get('head meta[name="robots"]').should('exist');
-    cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
-      expect(cont).to.not.contain('noindex')
+  cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
+			if(cont.includes('noindex')){
+				jsonAssertion.softTrue(false, `Error found on page ${url}`)
+			}
     });
+	cy.get('.td-sub-footer-menuss').then(footer =>{
+		if(footer.length < 1){
+			jsonAssertion.softTrue(false, `No footer found on page ${url}`)
+		}
+	})
 }
+
+
+// jsonAssertion.softTrue(expect(cont).to.not.contain('noindex'), 'URL had message')
 
 export const checkCrawler = (j) => { 
 	fullMap.forEach((sitemap, index)=> {
 		describe(`Map Group ${index+1} `, ()=>{
 			before(()=>{
-				cy.wait(10000)
+				// cy.wait(10000)
 				cy.log(fullMap.length)
 			})
 			sitemap.forEach((obj)=>{
@@ -233,16 +247,17 @@ export const checkCrawler = (j) => {
 							if(innerJSON.urlset?.url[1]){
 								if(!innerJSON.urlset?.url[j]){return}
 								cy.visit(innerJSON.urlset.url[j].loc)
-								checkMetaTag()
+								checkMetaTag(innerJSON.urlset.url[j].loc)
 								cy.get('.td-sub-footer-menu').should('exist')
 							} else {
 								if(!innerJSON.urlset?.url || j > 1){
 									return
 								}
 								cy.visit(innerJSON.urlset.url.loc)
-								checkMetaTag()
+								checkMetaTag(innerJSON.urlset.url.loc)
 								cy.get('.td-sub-footer-menu').should('exist')
 							}
+							jsonAssertion.softAssertAll()
 						})
 					});
 				// }
