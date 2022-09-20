@@ -220,7 +220,7 @@ export const checkMetaTag = (url) =>{
 				jsonAssertion.softTrue(false, `Error found on page ${url}`)
 			}
     });
-	cy.get('.td-sub-footer-menuss').then(footer =>{
+	cy.get('.td-sub-footer-menu').then(footer =>{
 		if(footer.length < 1){
 			jsonAssertion.softTrue(false, `No footer found on page ${url}`)
 		}
