@@ -1,6 +1,6 @@
 const { stringify } = require('mocha/lib/utils')
 const X2JS = require('x2js')
-const { fullMap, checkMetaTag, checkCrawler } = require('../support')
+const { fullMap, checkMetaTag, checkCrawler } = require('../../support')
 const axios = require('axios').default
 
 
