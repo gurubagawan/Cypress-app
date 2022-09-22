@@ -244,18 +244,21 @@ export const checkCrawler = (j) => {
 							const x2js = new X2JS()
 							// console.log(resp)
 							const innerJSON = x2js.xml2js(resp.body)
-							if(innerJSON.urlset?.url[1]){
-								if(!innerJSON.urlset?.url[j]){return}
-								cy.visit(innerJSON.urlset.url[j].loc)
-								checkMetaTag(innerJSON.urlset.url[j].loc)
-								cy.get('.td-sub-footer-menu').should('exist')
+							if(Array.isArray(innerJSON.urlset?.url)){
+								// if(!innerJSON.urlset?.url[j]){return}
+								innerJSON.urlset?.url.forEach((item)=>{
+
+									cy.visit(item.loc)
+									checkMetaTag(item.loc)
+									cy.task('log', 'Test Passed')
+								})
 							} else {
 								if(!innerJSON.urlset?.url || j > 1){
 									return
 								}
 								cy.visit(innerJSON.urlset.url.loc)
 								checkMetaTag(innerJSON.urlset.url.loc)
-								cy.get('.td-sub-footer-menu').should('exist')
+								cy.task('log', 'Test Passed')
 							}
 						})
 						jsonAssertion.softAssertAll()
