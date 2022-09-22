@@ -257,8 +257,8 @@ export const checkCrawler = (j) => {
 								checkMetaTag(innerJSON.urlset.url.loc)
 								cy.get('.td-sub-footer-menu').should('exist')
 							}
-							jsonAssertion.softAssertAll()
 						})
+						jsonAssertion.softAssertAll()
 					});
 				// }
 			})
