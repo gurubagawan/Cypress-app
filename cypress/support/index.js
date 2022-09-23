@@ -217,11 +217,13 @@ export const checkMetaTag = (url) =>{
 	cy.get('head meta[name="robots"]').should('exist');
   cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
 			if(cont.includes('noindex')){
+				cy.task('log', `Test failed for ${url}`)
 				jsonAssertion.softTrue(false, `Error found on page ${url}`)
 			}
     });
 	cy.get('.td-sub-footer-menu').then(footer =>{
 		if(footer.length < 1){
+			cy.task('log', `Test failed for ${url}`)
 			jsonAssertion.softTrue(false, `No footer found on page ${url}`)
 		}
 	})
