@@ -230,7 +230,7 @@ export const checkMetaTag = (url) =>{
 
 // jsonAssertion.softTrue(expect(cont).to.not.contain('noindex'), 'URL had message')
 
-export const checkCrawler = (j) => { 
+export const checkCrawler = () => { 
 	fullMap.forEach((sitemap, index)=> {
 		describe(`Map Group ${index+1} `, ()=>{
 			before(()=>{
@@ -250,15 +250,15 @@ export const checkCrawler = (j) => {
 
 									cy.visit(item.loc)
 									checkMetaTag(item.loc)
-									cy.task('log', 'Test Passed')
+									cy.task('log', `test passed for ${item.loc}`)
 								})
 							} else {
-								if(!innerJSON.urlset?.url || j > 1){
-									return
-								}
+								// if(!innerJSON.urlset?.url || j > 1){
+								// 	return
+								// }
 								cy.visit(innerJSON.urlset.url.loc)
 								checkMetaTag(innerJSON.urlset.url.loc)
-								cy.task('log', 'Test Passed')
+								cy.task('log', `Test Passed for ${innerJSON.urlset.url.loc}`)
 							}
 						})
 						jsonAssertion.softAssertAll()
