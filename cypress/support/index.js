@@ -214,17 +214,24 @@ export const checkICIDLinks = (url, selector, gallery=false, sub="") =>{
 }
 
 export const checkMetaTag = (url) =>{
+	cy.visit({url: url, failOnStatusCode: false})
+
 	cy.get('head meta[name="robots"]').should('exist');
   cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
 			if(cont.includes('noindex')){
-				cy.task('log', `Test failed for ${url}`)
+				cy.task('log', `Robots test failed for ${url}`)
 				jsonAssertion.softTrue(false, `Error found on page ${url}`)
+			} else {
+				cy.task('log', `Robots passed for ${url}`)
 			}
     });
 	cy.get('.td-sub-footer-menu').then(footer =>{
 		if(footer.length < 1){
-			cy.task('log', `Test failed for ${url}`)
+			cy.task('log', `Footer Test failed for ${url}`)
 			jsonAssertion.softTrue(false, `No footer found on page ${url}`)
+		} else {
+			cy.task('log', `Footer passed for ${url}`)
+			
 		}
 	})
 }
@@ -233,15 +240,14 @@ export const checkMetaTag = (url) =>{
 // jsonAssertion.softTrue(expect(cont).to.not.contain('noindex'), 'URL had message')
 
 export const checkCrawler = () => { 
-	fullMap.forEach((sitemap, index)=> {
-		describe(`Map Group ${index+1} `, ()=>{
+		describe(`Map Group`, ()=>{
 			before(()=>{
 				// cy.wait(10000)
 				cy.log(fullMap.length)
 			})
-			sitemap.forEach((obj)=>{
+			fullMap.forEach((obj, index)=> {
 				// for (let i = j; i < j+10; i++) {
-					it(`Tests URL ${obj.loc}`,()=>{
+					it(`Tests URL ${obj["loc"]}`,()=>{
 						cy.request(obj.loc).then((resp)=>{
 							const x2js = new X2JS()
 							// console.log(resp)
@@ -250,17 +256,13 @@ export const checkCrawler = () => {
 								// if(!innerJSON.urlset?.url[j]){return}
 								innerJSON.urlset?.url.forEach((item)=>{
 
-									cy.visit({url: item.loc, failOnStatusCode: false})
 									checkMetaTag(item.loc)
-									cy.task('log', `test passed for ${item.loc}`)
 								})
 							} else {
 								if(!innerJSON.urlset?.url){
 									return
 								}
-								cy.visit({url: innerJSON.urlset.url.loc, failOnStatusCode: false})
 								checkMetaTag(innerJSON.urlset.url.loc)
-								cy.task('log', `Test Passed for ${innerJSON.urlset.url.loc}`)
 							}
 						})
 						jsonAssertion.softAssertAll()
@@ -268,11 +270,9 @@ export const checkCrawler = () => {
 				// }
 			})
 		})
-	})
 }
 
 export const fullMap = [
-	[
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-tax-post_tag.xml",
 				"lastmod": "2022-06-09T14:33:35+00:00"
@@ -296,8 +296,7 @@ export const fullMap = [
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2022-01.xml",
 				"lastmod": "2022-01-31T21:58:37+00:00"
-		}
-], [
+		},
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2021-11.xml",
 				"lastmod": "2021-11-16T19:19:04+00:00"
@@ -329,8 +328,7 @@ export const fullMap = [
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-05.xml",
 				"lastmod": "2020-11-09T13:22:47+00:00"
-		}
-],  [
+		},
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-03.xml",
 				"lastmod": "2022-05-27T13:26:43+00:00"
@@ -367,7 +365,6 @@ export const fullMap = [
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2021-11.xml",
 				"lastmod": "2022-04-19T19:35:32+00:00"
 		},
-],  [
 		
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2021-10.xml",
@@ -432,8 +429,7 @@ export const fullMap = [
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2020-07.xml",
 				"lastmod": "2021-04-22T22:03:37+00:00"
-		}
-],  [
+		},
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2020-06.xml",
 				"lastmod": "2020-11-25T15:52:34+00:00"
@@ -494,8 +490,6 @@ export const fullMap = [
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2018-12.xml",
 				"lastmod": "2020-04-16T15:25:46+00:00"
 		},
-
-], [
 		{
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-pt-post-2018-11.xml",
 				"lastmod": "2020-04-16T15:25:57+00:00"
@@ -532,5 +526,4 @@ export const fullMap = [
 				"loc": "https://kcfinalstg.wpengine.com/sitemap-authors.xml",
 				"lastmod": "2022-06-09T14:33:35+00:00"
 		}
-	]
 ]
