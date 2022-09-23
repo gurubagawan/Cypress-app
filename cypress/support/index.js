@@ -250,7 +250,7 @@ export const checkCrawler = () => {
 								// if(!innerJSON.urlset?.url[j]){return}
 								innerJSON.urlset?.url.forEach((item)=>{
 
-									cy.visit(item.loc)
+									cy.visit({url: item.loc, failOnStatusCode: false})
 									checkMetaTag(item.loc)
 									cy.task('log', `test passed for ${item.loc}`)
 								})
@@ -258,7 +258,7 @@ export const checkCrawler = () => {
 								if(!innerJSON.urlset?.url){
 									return
 								}
-								cy.visit(innerJSON.urlset.url.loc)
+								cy.visit({url: innerJSON.urlset.url.loc, failOnStatusCode: false})
 								checkMetaTag(innerJSON.urlset.url.loc)
 								cy.task('log', `Test Passed for ${innerJSON.urlset.url.loc}`)
 							}
