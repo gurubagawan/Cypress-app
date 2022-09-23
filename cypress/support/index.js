@@ -253,9 +253,9 @@ export const checkCrawler = () => {
 									cy.task('log', `test passed for ${item.loc}`)
 								})
 							} else {
-								// if(!innerJSON.urlset?.url || j > 1){
-								// 	return
-								// }
+								if(!innerJSON.urlset?.url){
+									return
+								}
 								cy.visit(innerJSON.urlset.url.loc)
 								checkMetaTag(innerJSON.urlset.url.loc)
 								cy.task('log', `Test Passed for ${innerJSON.urlset.url.loc}`)
