@@ -217,6 +217,9 @@ export const checkMetaTag = (url) =>{
 	cy.visit({url: url, failOnStatusCode: false})
 
 	cy.get('head meta[name="robots"]').should('exist');
+
+	// const cont = Cypress.$('meta[name=robots]').attr('content')
+	// console.log(cont)
   cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
 			if(cont.includes('noindex')){
 				cy.task('log', `Robots test failed for ${url}`)
