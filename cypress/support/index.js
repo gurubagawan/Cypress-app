@@ -247,8 +247,9 @@ export const checkCrawler = () => {
 			before(()=>{
 				// cy.wait(10000)
 				cy.log(fullMap.length)
+				// cy.request("https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-03.xml")
 			})
-			fullMap.forEach((obj, index)=> {
+			testMap.forEach((obj)=> {
 				// for (let i = j; i < j+10; i++) {
 					it(`Tests URL ${obj.loc}`,()=>{
 						cy.request(obj.loc).then((resp)=>{
@@ -257,23 +258,37 @@ export const checkCrawler = () => {
 							const innerJSON = x2js.xml2js(resp.body)
 							if(Array.isArray(innerJSON.urlset?.url)){
 								// if(!innerJSON.urlset?.url[j]){return}
+								// console.log(innerJSON)
 								innerJSON.urlset?.url.forEach((item)=>{
-
-									checkMetaTag(item.loc)
+									// for (let index = 0; index < innerJSON.urlset?.url.length; index++) {
+									// 	const item = innerJSON.urlset?.url[index];
+										
+										// if(index > 20){return}
+										checkMetaTag(item.loc)
+									// }
 								})
 							} else {
-								if(!innerJSON.urlset?.url){
-									return
-								}
+								// if(!innerJSON.urlset?.url){
+								// 	return
+								// }
 								checkMetaTag(innerJSON.urlset.url.loc)
 							}
 						})
+					});
+					it(`Tests Results ${obj.loc}`, () => {
 						jsonAssertion.softAssertAll()
 					});
 				// }
 			})
 		})
 }
+
+const testMap = [
+	{
+		loc: "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-03.xml",
+		"lastmod": "2022-06-09T14:33:35+00:00"
+}
+]
 
 export const fullMap = [
 	{
