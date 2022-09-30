@@ -249,7 +249,7 @@ export const checkCrawler = () => {
 				cy.log(fullMap.length)
 				// cy.request("https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-03.xml")
 			})
-			testMap.forEach((obj)=> {
+			fullMap.forEach((obj)=> {
 				// for (let i = j; i < j+10; i++) {
 					it(`Tests URL ${obj.loc}`,()=>{
 						cy.request(obj.loc).then((resp)=>{
@@ -285,9 +285,20 @@ export const checkCrawler = () => {
 
 const testMap = [
 	{
-		loc: "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-03.xml",
+		loc: "https://kcfinalstg.wpengine.com/sitemap-pt-post-2020-07.xml",
 		"lastmod": "2022-06-09T14:33:35+00:00"
-}
+	},
+	{
+		loc: "https://kcfinalstg.wpengine.com/sitemap-pt-post-2018-06.xml",
+		"lastmod": "2022-06-09T14:33:35+00:00"
+	},
+	{
+		loc: "https://kcfinalstg.wpengine.com/sitemap-pt-recipes-2020-05.xml",
+		"lastmod": "2022-06-09T14:33:35+00:00"
+	}
+	
+
+	
 ]
 
 export const fullMap = [
