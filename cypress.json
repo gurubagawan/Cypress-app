@@ -4,5 +4,5 @@
   "viewportHeight": 900,
   "requestTimeout": 10000,
   "chromeWebSecurity": false,
-  "numTestsKeptInMemory": 3
+  "numTestsKeptInMemory": 5
 }
