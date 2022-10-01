@@ -228,15 +228,15 @@ export const checkMetaTag = (url) =>{
 				cy.task('log', `Robots passed for ${url}`)
 			}
     });
-	cy.get('.td-sub-footer-menu').then(footer =>{
-		if(footer.length < 1){
-			cy.task('log', `Footer Test failed for ${url}`)
-			jsonAssertion.softTrue(false, `No footer found on page ${url}`)
-		} else {
-			cy.task('log', `Footer passed for ${url}`)
+	// cy.get('.td-sub-footer-menu').then(footer =>{
+	// 	if(footer.length < 1){
+	// 		cy.task('log', `Footer Test failed for ${url}`)
+	// 		jsonAssertion.softTrue(false, `No footer found on page ${url}`)
+	// 	} else {
+	// 		cy.task('log', `Footer passed for ${url}`)
 			
-		}
-	})
+	// 	}
+	// })
 }
 
 
