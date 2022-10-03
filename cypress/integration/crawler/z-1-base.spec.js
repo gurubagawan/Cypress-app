@@ -41,6 +41,9 @@ const axios = require('axios').default
 
 
 	checkCrawler()
+	// it('Example test ', () => {
+	// 	cy.request('https://kcfinalstg.wpengine.com/recipes/salade-de-legumes-tiede-au-thon/').its('body').should('include', '<h1>Admin</h1>')
+	// });
 
 // for (let j = 10; j < 20; j++) {
 // 	checkCrawler(j)

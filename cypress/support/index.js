@@ -214,20 +214,41 @@ export const checkICIDLinks = (url, selector, gallery=false, sub="") =>{
 }
 
 export const checkMetaTag = (url) =>{
-	cy.visit({url: url, failOnStatusCode: false})
+	// cy.visit({url: url, failOnStatusCode: false})
+	cy.request({
+		url: url, 
+		failOnStatusCode: false,
+	}).its('body').then(cont=>{
+		if(cont.includes('noindex')){
+			cy.task('log', `Robots test failed for ${url}`)
+			jsonAssertion.softTrue(false, `Error found on page ${url}`)
+		} else {
+			cy.task('log', `Robots passed for ${url}`)
+		}
 
-	cy.get('head meta[name="robots"]').should('exist');
+		if(cont.includes('td-sub-footer-menu')){
+			cy.task('log', `Footer passed for ${url}`)
+		} else {
+			cy.task('log', `Footer Test failed for ${url}`)
+			jsonAssertion.softTrue(false, `No footer found on page ${url}`)
+			
+		}
+		
+	});
+	
+
+	// cy.get('head meta[name="robots"]').should('exist');
 
 	// const cont = Cypress.$('meta[name=robots]').attr('content')
 	// console.log(cont)
-  cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
-			if(cont.includes('noindex')){
-				cy.task('log', `Robots test failed for ${url}`)
-				jsonAssertion.softTrue(false, `Error found on page ${url}`)
-			} else {
-				cy.task('log', `Robots passed for ${url}`)
-			}
-    });
+  // cy.get('head meta[name="robots"]').invoke('attr', 'content').then(cont=>{
+	// 		if(cont.includes('noindex')){
+	// 			cy.task('log', `Robots test failed for ${url}`)
+	// 			jsonAssertion.softTrue(false, `Error found on page ${url}`)
+	// 		} else {
+	// 			cy.task('log', `Robots passed for ${url}`)
+	// 		}
+  //   });
 	// cy.get('.td-sub-footer-menu').then(footer =>{
 	// 	if(footer.length < 1){
 	// 		cy.task('log', `Footer Test failed for ${url}`)
