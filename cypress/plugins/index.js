@@ -26,12 +26,12 @@ module.exports = (on, config) => {
   return config;
 };
 
-module.exports = (on, config) => {
-  on('task', {
-    log(message) {
-      console.log(message)
+// module.exports = (on, config) => {
+//   on('task', {
+//     log(message) {
+//       console.log(message)
   
-      return null
-    },
-  })
-}
+//       return null
+//     },
+//   })
+// }
