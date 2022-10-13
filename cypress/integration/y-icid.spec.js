@@ -1,7 +1,7 @@
 import { checkICIDLinks } from "../support";
 
 context('ICID Tests', ()=>{
-  describe.skip('Load page', () => {
+  describe('Load page', () => {
     checkICIDLinks('hoverboard-buying-guide', '[href*="walmart.ca"]')
     checkICIDLinks('teacher-gifts', '[href*="walmart.ca"]', true)
     checkICIDLinks('special-needs-toys', '[href*="walmart.ca"]')
