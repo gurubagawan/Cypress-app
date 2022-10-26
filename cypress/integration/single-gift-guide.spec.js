@@ -9,31 +9,20 @@ context("Tests for indidivdual gift guides", () => {
   describe("header tests", () => {
     helper.checkArticleCrumbs(
       "Gift Guides",
-      "We Pick 2021’s Best Toys for Kids Aged 1 to 10"
+      "The 50 Hottest Toys of 2021 for Kids of All Ages"
       // check if there is a second element
       // get the content of the title and compare against that
     );
 
     it("checks that title exists", () => {
-      cy.get(".td-post-title").shouldHaveContent();
-    });
-    it("checks that sub-title exists", () => {
-      cy.get(".sub_title_main").shouldHaveContent();
+      cy.get(".mainTitle").shouldHaveContent();
     });
   });
   describe("Tests for main content", () => {
     helper.checkArticleAuthor();
 
-    it("checks that article image exists and links to gallery", () => {
-      cy.get(".ss_img").shouldHaveContent();
-      cy.getAndFind(".ss_img", ".start_slideshow").shouldHaveContent();
-    });
-
     it("checks that article content exists", () => {
-      cy.get(".ss_intro_text").shouldHaveContent();
-      cy.getAndFind(".ss_intro_text", ".textLink")
-        .shouldHaveContent()
-        .checkLink();
+      cy.get(".content_block").shouldHaveContent();
     });
   });
 

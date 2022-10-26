@@ -87,9 +87,6 @@ export const checkSectionHeader = (
   it(`checks that ${sectionTitle} section title has content`, () => {
     cy.checkSectionTitle(selector, titleContent);
   });
-  it(`checks that ${sectionTitle} section sub header has content`, () => {
-    cy.checkSectionSub(selector, subContent);
-  });
 };
 
 export const checkRecipeBlock = (
@@ -160,25 +157,19 @@ export const checkArticleHeader = () => {
 export const checkArticleAuthor = () => {
   describe('Editors block tests', () => {
     it('checks that editors block exists ', () => {
-      cy.get('.td-pb-span4').shouldHaveContent();
+      cy.get('.metaBlock').shouldHaveContent();
     });
     it('checks that block title is there', () => {
-      cy.get('.author-area > :nth-child(1)').shouldHaveContent();
+      cy.get('.mainTitle').shouldHaveContent();
     });
     it('checks that avatar image exists', () => {
       cy.get('.avatar').should('be.visible');
     });
     it('checks that author link exists', () => {
-      cy.get('.author-name').checkLink();
-    });
-    it('checks that author role exists', () => {
-      cy.get('.author-role').shouldHaveContent();
+      cy.get('.td-post-author-name').checkLink();
     });
     it('checks that author social links exist', () => {
-      cy.get('.author-area > .author-social-links').shouldHaveContent();
-    });
-    it('checks that author bio exists', () => {
-      cy.get('.author-area > p').shouldHaveContent();
+      cy.get('.author-social-links').shouldHaveContent();
     });
   });
 };

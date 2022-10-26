@@ -236,9 +236,9 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('checkSectionTitle', (selector, content) => {
-  cy.getAndFind(selector, '.section_title').shouldHaveContent();
+  cy.getAndFind(selector, '.sec_tit').shouldHaveContent();
   if (content) {
-    cy.getAndFind(selector, '.section_title').contains(content);
+    cy.getAndFind(selector, '.sec_tit').contains(content);
   }
 });
 
