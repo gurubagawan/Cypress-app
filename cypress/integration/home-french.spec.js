@@ -10,6 +10,7 @@ context("Home Page French", () => {
   // Check we're on the french page before each test
   beforeEach(() => {
     cy.get("body").should("have.class", "fr");
+		cy.get('body').click(0, 0)
   });
 
   // https://on.cypress.io/interacting-with-elements
@@ -200,9 +201,9 @@ context("Home Page French", () => {
       });
       it("checks that slider changes with forward button at a rate of 1 item per click", () => {
         cy.checkSliderNext(
-          ".editors_picks_row > .block",
-          ".c_title",
-          "#homev2_featuredcar",
+          ".recent_carousal_posts",
+          ".title_art",
+          "#posts_slider",
           1
         );
         helper.checkItemCarousel(".editors_picks_row > .block", visibleLength);

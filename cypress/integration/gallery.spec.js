@@ -31,9 +31,6 @@ context("Tests for gallery slideshow", () => {
     it("checks that product has a description", () => {
       cy.get(".text-container").shouldHaveContent();
     });
-    it("checks that product description is shortened", () => {
-      cy.get("span.terminating_overlay").should("be.visible");
-    });
     it("checks that view more button is visible", () => {
       cy.get(".readmoreLess").contains("View More");
     });
